@@ -63,15 +63,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DestroiedBlock.cs" />
-    <Compile Include="Assets\Scripts\FirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\DestroiedBlock.cs" />
+    <Compile Include="Assets\Scripts\GlobalClasses\Timer.cs" />
     <Compile Include="Assets\Scripts\GlobalClasses\Vector2Int.cs" />
     <Compile Include="Assets\Scripts\GlobalClasses\Vector3Int.cs" />
+    <Compile Include="Assets\Scripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Items\Tool.cs" />
     <Compile Include="Assets\Scripts\MapEntities\Block.cs" />
     <Compile Include="Assets\Scripts\MapEntities\BlockObject.cs" />
     <Compile Include="Assets\Scripts\MapEntities\Chunk.cs" />
     <Compile Include="Assets\Scripts\MapEntities\MapManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerToWorldInteraction.cs" />
+    <Compile Include="Assets\Scripts\Player\FirstPersonController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerToWorldInteraction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

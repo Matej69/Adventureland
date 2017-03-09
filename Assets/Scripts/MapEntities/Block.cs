@@ -13,8 +13,20 @@ namespace n_block
     public enum E_BLOCK {
         GRASS,
         GROUND,
+        STONE,
+        SAND,
+        COAL,
+        METAL,
+        IRON,
+        GOLD,
+        DIAMOND,
+        RUBY,
+        EMERALD,
+        LAPIS,
         SIZE
     }
+
+  
 
 
     //*** USED FOR LOGIC ARRAYS -> DATA FOR EACH BLOCK THAT IS TAKING AS SMALL AMOUNT MEMORY AS IT NEEDS
@@ -86,8 +98,18 @@ namespace n_block
 
         private static void FillBlocksDictionary()
         {
-            blocksInfo.Add(E_BLOCK.GROUND, new BlockInfo(E_BLOCK.GROUND, 2, 1, LoadMaterial("ground")));
-            blocksInfo.Add(E_BLOCK.GRASS, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("grass")));
+            blocksInfo.Add(E_BLOCK.GRASS, new BlockInfo(E_BLOCK.GROUND, 2, 1, LoadMaterial("grass")));
+            blocksInfo.Add(E_BLOCK.GROUND, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("ground")));
+            blocksInfo.Add(E_BLOCK.STONE, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("stone")));
+            blocksInfo.Add(E_BLOCK.SAND, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("sand")));
+            blocksInfo.Add(E_BLOCK.COAL, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("coal")));
+            blocksInfo.Add(E_BLOCK.METAL, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("metal")));
+            blocksInfo.Add(E_BLOCK.IRON, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("iron")));
+            blocksInfo.Add(E_BLOCK.GOLD, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("gold")));
+            blocksInfo.Add(E_BLOCK.DIAMOND, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("diamond")));
+            blocksInfo.Add(E_BLOCK.RUBY, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("ruby")));
+            blocksInfo.Add(E_BLOCK.EMERALD, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("emerald")));
+            blocksInfo.Add(E_BLOCK.LAPIS, new BlockInfo(E_BLOCK.GRASS, 3, 2, LoadMaterial("lapis")));
         }
 
         private static Material LoadMaterial(string _fileName)
@@ -95,9 +117,55 @@ namespace n_block
             return (Material)Resources.Load("Materials/" + _fileName, typeof(Material));
         }
     }
+    
 
 
+    public class BlockSprites
+    {
+        private static bool dictionaryFilled = false;
+        private static Dictionary<E_BLOCK, Sprite> blockSprites = new Dictionary<E_BLOCK, Sprite>();
 
+         public static Sprite GetBlockSprite(E_BLOCK _id)
+        {
+            //if it's the first time we are getting blocks, fill blockInfo dictionary
+            //if it is not skip filling dictionary
+            if(!dictionaryFilled)
+            {
+                FillBlocksDictionary();
+                dictionaryFilled = true;
+            }
+
+            foreach (KeyValuePair<E_BLOCK, Sprite> pair in blockSprites)
+                if (pair.Key == _id)
+                    return pair.Value;
+            Debug.LogError("CAN NOT GET Sprite with ID = " + _id + " FROM DICTIONARY");
+            return null;
+        }
+
+
+        private static void FillBlocksDictionary()
+        {
+            blockSprites.Add(E_BLOCK.GROUND, LoadSprite("ground"));
+            blockSprites.Add(E_BLOCK.GRASS, LoadSprite("grass"));
+            blockSprites.Add(E_BLOCK.STONE, LoadSprite("stone"));
+            blockSprites.Add(E_BLOCK.SAND, LoadSprite("sand"));
+            blockSprites.Add(E_BLOCK.COAL, LoadSprite("coal"));
+            blockSprites.Add(E_BLOCK.METAL, LoadSprite("metal"));
+            blockSprites.Add(E_BLOCK.IRON, LoadSprite("iron"));
+            blockSprites.Add(E_BLOCK.GOLD, LoadSprite("gold"));
+            blockSprites.Add(E_BLOCK.DIAMOND, LoadSprite("diamond"));
+            blockSprites.Add(E_BLOCK.RUBY, LoadSprite("ruby"));
+            blockSprites.Add(E_BLOCK.EMERALD, LoadSprite("emerald"));
+            blockSprites.Add(E_BLOCK.LAPIS, LoadSprite("lapis"));
+        }
+
+        private static Sprite LoadSprite(string _fileName)
+        {
+            return (Sprite)Resources.Load("Sprites/" + _fileName, typeof(Sprite));
+        }
+    }
+
+    
 
 
 

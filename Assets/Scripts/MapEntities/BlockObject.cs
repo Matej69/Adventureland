@@ -15,13 +15,15 @@ public class BlockObject : MonoBehaviour {
 
     public void OnDestroyByPlayer()
     {
+        //add block to inventory
+        FindObjectOfType<Inventory>().AddBlock((n_block.E_BLOCK)blockID);
         //Create mini blocks with same material as block that was destroied
         GameObject destroiedBlock = (GameObject)(Resources.Load("Objects/Blocks/DestriedResource", typeof(GameObject)));
         Material mat = n_block.BlockInfoDatabase.GetBlockInfo((n_block.E_BLOCK)blockID).material;
         destroiedBlock.GetComponent<DestroiedBlock>().SetMaterial(mat);
-        Instantiate(destroiedBlock, transform.position, Quaternion.identity);
+        Instantiate(destroiedBlock, transform.position, Quaternion.identity);       
     }
-	
+
 
 
 }

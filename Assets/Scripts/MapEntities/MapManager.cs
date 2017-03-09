@@ -62,7 +62,6 @@ public class MapManager : MonoBehaviour {
         Vector3Int posID = _blockObj.GetComponent<BlockObject>().posID;
         _chunk.ClearBlockFromMemory(posID);
         //Destroy from game scene
-        _blockObj.GetComponent<BlockObject>().OnDestroyByPlayer();
         Destroy(_blockObj);
     }
 

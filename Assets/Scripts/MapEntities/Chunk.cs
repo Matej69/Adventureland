@@ -29,7 +29,7 @@ namespace n_chunk
                 for (int z = 0; z < n_chunk.CHUNK_SIZE.Z ; ++z)
                     for (int y = 0; y < n_chunk.CHUNK_SIZE.Y ; ++y)
                     {
-                        n_block.E_BLOCK blockType = (n_block.E_BLOCK)Random.Range(0, 2);
+                        n_block.E_BLOCK blockType = (n_block.E_BLOCK)Random.Range(0, (int)n_block.E_BLOCK.SIZE);
                         Vector3Int pos = new Vector3Int(x, y, z);
                         blocks[x, z, y] = new n_block.BlockLogic(pos, (byte)blockType);                                                
                     }
