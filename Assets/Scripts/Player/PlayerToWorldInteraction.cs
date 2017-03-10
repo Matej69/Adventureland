@@ -20,11 +20,6 @@ public class PlayerToWorldInteraction : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            FindObjectOfType<Tool>().OnActionClick();
-        }
 
     }
 

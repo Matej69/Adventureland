@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Tool : Item {
-
+    
     Animator animator;
     Timer swingAnimTimer;
 
@@ -17,6 +17,7 @@ public class Tool : Item {
     // Use this for initialization
     void Start () {
         OnStart();
+        Debug.Log("ss");
     }
 	
 	// Update is called once per frame

@@ -10,9 +10,13 @@ public class Inventory : MonoBehaviour {
     Dictionary<n_block.E_BLOCK, int> blocks = new Dictionary<n_block.E_BLOCK, int>();
     Dictionary<Item.E_ITEM, int> items = new Dictionary<Item.E_ITEM, int>();
 
+    Item.E_ITEM itemInHandID = Item.E_ITEM.STICK;
+    GameObject ref_itemInHand;
+
     public GameObject prefab_slot;
 
     public GameObject prefab_BlockInventory;
+    public GameObject prefab_ItemInventory;
     GameObject ref_blockInventory;
     GameObject ref_itemInventory;
 
@@ -20,12 +24,25 @@ public class Inventory : MonoBehaviour {
     void Start() {
         SetInitValuesForBlocks();
         SetInitValuesForItems();
+
+        CreateItemInventory();
+
+        PlaceItemInHand(Tool.E_ITEM.PICKAXE);
+
     }
 
     // Update is called once per frame
     void Update() {
+        HandleBlockInventoryGUI();
 
-        HandelBlockInventoryGUI();
+        HandleItemChange();
+        FillItemInfoToGUI();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if(ref_itemInHand != null)
+                ref_itemInHand.GetComponent<Item>().OnActionClick();
+        }
     }
 
 
@@ -78,6 +95,28 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public void FillItemInfoToGUI()
+    {
+        GameObject ref_holder = ref_itemInventory.transform.FindChild("ItemInventoryHolder").gameObject;
+
+        int count = 0;
+        foreach(Transform slot in ref_holder.transform)
+        {
+            Image img = slot.FindChild("Image").GetComponent<Image>();
+            Image border = slot.FindChild("SlotBorder").GetComponent<Image>();
+
+            
+
+            //if we are on a slot where are item should be, select that slot(change border color)
+            if (count == (int)itemInHandID)
+                border.color = new Color(0, 1, 0, 1);
+            else
+                border.color = new Color(1, 1, 1, 1);
+
+            count++;
+        }
+    }
+
 
     //******CREATE/DESTROY GUI******
     public void CreateBlockInventory()
@@ -90,6 +129,11 @@ public class Inventory : MonoBehaviour {
         Destroy(ref_blockInventory);
     }
 
+    public void CreateItemInventory()
+    {
+        ref_itemInventory = Instantiate(prefab_ItemInventory);
+    }
+
 
 
     //****** CHECK FOR GUI STATE****
@@ -98,10 +142,10 @@ public class Inventory : MonoBehaviour {
         return (ref_blockInventory != null);
     }
 
-
+       
 
     //********HANDLERS*******
-    public void HandelBlockInventoryGUI()
+    public void HandleBlockInventoryGUI()
     {
         //CREATE/HIDE ON BUTTON PRESS
         if(Input.GetKeyDown(KeyCode.I))
@@ -115,6 +159,43 @@ public class Inventory : MonoBehaviour {
         if (ref_blockInventory != null)
             FillBlockInfoToGUI();
     }
+
+    //******* SWITCH ITEM IN HAND
+    void HandleItemChange()
+    {
+        //change item-inventory visuals
+        float scrollDir = Input.GetAxis("Mouse ScrollWheel");
+        if (scrollDir > 0)
+        {
+            itemInHandID = (Item.E_ITEM)(((int)itemInHandID + 1) % (int)Item.E_ITEM.SIZE);
+        }
+        if (scrollDir < 0)
+        {
+            if ((int)itemInHandID == 0)
+                itemInHandID = Item.E_ITEM.SIZE - 1;
+            else
+                itemInHandID = (Item.E_ITEM)(((int)itemInHandID - 1) % (int)Item.E_ITEM.SIZE);
+        }
+        //create tool an place it in hand
+        if(scrollDir != 0)
+            PlaceItemInHand(itemInHandID);
+
+
+    }
+
+    void PlaceItemInHand(Tool.E_ITEM _id)
+    {
+        if(ref_itemInHand != null)
+            Destroy(ref_itemInHand);
+
+        Debug.Log("sss");
+        Vector3 itemPos = Camera.main.transform.FindChild("HeldItemPos").gameObject.transform.position;
+        ref_itemInHand = (GameObject)Instantiate(Item.GetPrefab(_id), itemPos, Quaternion.identity);
+        ref_itemInHand.transform.parent = Camera.main.transform;
+        itemInHandID = _id;
+        
+    }
+
 
 
 
