@@ -5,25 +5,22 @@ public class Tool : Item {
     
     Animator animator;
     Timer swingAnimTimer;
+    
 
-    bool alreadyHitThisSwing = false;
-
+    bool attackAnimRunning = false;
+    
     public LayerMask blockMask;
     public Transform toolDamagePoint;
-
-    //BlockObject ref_blockToDestroy;
-
+    
 
     // Use this for initialization
     void Start () {
         OnStart();
-        Debug.Log("ss");
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        HandleTimerUpdate();
+        //HandleTimerUpdate();
     }
 
 
@@ -31,52 +28,39 @@ public class Tool : Item {
     {
         base.OnStart();
 
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();        
 
         durability = 5;
         swingAnimTimer = new Timer(0.4f);
+        swingAnimTimer.currentTime = 0;
     }
 
     public override void OnActionClick()
     {
-        //only swing if we are not already swinging
-        if (!swingAnimTimer.IsFinished())
+        if (ShopOwner.IsShopCreated())
             return;
-        
-        animator.SetBool("isSwinging", true);
-        swingAnimTimer.Reset();        
-    }
 
-
-    void HandleTimerUpdate()
-    {
-        if (!swingAnimTimer.IsFinished())
-        {
-            swingAnimTimer.Tick(Time.deltaTime);            
-            //if it's finished, set animation state back to IDLE
-            if (swingAnimTimer.IsFinished())
-            {
-                animator.SetBool("isSwinging", false);
-            }
-            //if animation of tool is hitting block(in animation)  
-            if (AnimInStateToDestroyBlock() && !alreadyHitThisSwing)
-            {
-                HandleOnRayHitBlock();
-                alreadyHitThisSwing = true;
-            }
+        //only swing if we are not already swinging        
+        if (!IsAttackAnimRunning())
+        {            
+            SetAttackAnimState(1);
         }
         else
         {
-            alreadyHitThisSwing = false;
+            SetAttackAnimState(0);
         }
         
     }
-
-    bool AnimInStateToDestroyBlock()
-    {
-        return (swingAnimTimer.currentTime < swingAnimTimer.startTime / 2 && swingAnimTimer.currentTime > (swingAnimTimer.startTime / 2) - 0.1f);
+    
+    public void SetAttackAnimState(int _stateInt)
+    {        
+        bool state = (_stateInt == 0) ? false : true;
+        animator.SetBool("isSwinging", state);
     }
-
+    public bool IsAttackAnimRunning()
+    {
+        return animator.GetBool("isSwinging");
+    }
 
     void HandleOnRayHitBlock()
     {
@@ -91,8 +75,7 @@ public class Tool : Item {
             blockScr.OnDestroyByPlayer();
             DestroyBlock(hitInfo.collider.gameObject);
         }
-
-        Debug.DrawRay(cam.transform.position, dir * blockRayLength, Color.red);
+        //Debug.DrawRay(cam.transform.position, dir * blockRayLength, Color.red);
     }
 
 
