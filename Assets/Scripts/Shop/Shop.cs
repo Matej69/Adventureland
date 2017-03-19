@@ -55,6 +55,7 @@ public class Shop : MonoBehaviour {
 
             //Get requirement button component from GUI
             Button slotButton = Slots[i].transform.FindChild("Buy").GetComponent<Button>();
+            Text slotButtonText = slotButton.transform.FindChild("Text").GetComponent<Text>();
 
 
             //***Apply info/visuals for TEXT to GUI for each block that item requires
@@ -76,8 +77,18 @@ public class Shop : MonoBehaviour {
             }
 
             //***Apply info/visuals for BUTTON to GUI for each item slot
-            Color col = slotButton.image.color;
-            slotButton.image.color = (!allRequirementsFulfill) ? new Color(col.r, col.g, col.b, 0.3f) : new Color(col.r, col.g, col.b, 1f);
+            Color btnColor = slotButton.image.color;
+            Color textColor = slotButtonText.color;
+            if (allRequirementsFulfill)
+            {
+                slotButton.image.color = new Color(btnColor.r, btnColor.g, btnColor.b, 1f);
+                slotButtonText.color = new Color(textColor.r, textColor.g, textColor.b, 1f);
+            }
+            else
+            {
+                slotButton.image.color = new Color(btnColor.r, btnColor.g, btnColor.b, 0.3f);
+                slotButtonText.color = new Color(textColor.r, textColor.g, textColor.b, 0.3f);
+            }
 
 
         }

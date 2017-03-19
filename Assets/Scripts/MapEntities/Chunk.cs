@@ -7,9 +7,9 @@ namespace n_chunk
 
     //** VALUES MUST BE SMALLER THEN 255 BECAUSE WE'R USING BYTE, NOT INT
     public static class CHUNK_SIZE {
-        public const int X = 50;
-        public const int Z = 50;
-        public const int Y = 100;
+        public const int X = 60;
+        public const int Z = 60;
+        public const int Y = 150;
     }
 
 
@@ -25,13 +25,15 @@ namespace n_chunk
         //** We can pass some parameters for different chunk generation
         public void FillWithData()
         {
-            for(int x = 0; x < n_chunk.CHUNK_SIZE.X ; ++x)
-                for (int z = 0; z < n_chunk.CHUNK_SIZE.Z ; ++z)
-                    for (int y = 0; y < n_chunk.CHUNK_SIZE.Y ; ++y)
+            for (int x = 0; x < n_chunk.CHUNK_SIZE.X; ++x)
+                for (int z = 0; z < n_chunk.CHUNK_SIZE.Z; ++z)
+                    for (int y = 0; y < n_chunk.CHUNK_SIZE.Y; ++y)
                     {
-                        n_block.E_BLOCK blockType = (n_block.E_BLOCK)Random.Range(0, (int)n_block.E_BLOCK.SIZE);
+                        int level = n_block.BlockOccurrenceDatabase.GetLevelFromDepth(y);
+                        n_block.E_BLOCK blockType = n_block.BlockOccurrenceDatabase.GenerateRandomBlock(level);
+
                         Vector3Int pos = new Vector3Int(x, y, z);
-                        blocks[x, z, y] = new n_block.BlockLogic(pos, (byte)blockType);                                                
+                        blocks[x, z, y] = new n_block.BlockLogic(pos, (byte)blockType);
                     }
         }
 

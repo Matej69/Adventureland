@@ -37,6 +37,8 @@ namespace n_block
         public byte id { private set; get; }
         public Vector3Int cord { private set; get; }
         public bool isVisible = false;
+
+        public void SetProperties(byte _id, Vector3Int _cord, bool _isVisible) { id = _id; cord = _cord; isVisible = _isVisible; }
         
         public BlockLogic(Vector3Int _cord, byte _id)
         {
@@ -50,6 +52,10 @@ namespace n_block
 
 
 
+
+
+
+
     public class BlockInfo
     {        
         public E_BLOCK id { private set; get; }
@@ -57,7 +63,6 @@ namespace n_block
         public int durability { private set; get; }
         public int price { private set; get; }
         public Material material { private set; get; }
-
 
         public BlockInfo(E_BLOCK _id, string _name, int _dur, int _price, Material _mat)
         {            
@@ -70,15 +75,11 @@ namespace n_block
     }
 
 
-
-
-
     public class BlockInfoDatabase
     {
         private static bool dictionaryFilled = false;
 
-        private static Dictionary<E_BLOCK, BlockInfo> blocksInfo = new Dictionary<E_BLOCK, BlockInfo>();
-              
+        private static Dictionary<E_BLOCK, BlockInfo> blocksInfo = new Dictionary<E_BLOCK, BlockInfo>();        
 
         public static BlockInfo GetBlockInfo(E_BLOCK _id)
         {
@@ -96,8 +97,7 @@ namespace n_block
             Debug.LogError("CAN NOT GET BlockInfo with ID = " + _id + " FROM DICTIONARY");
             return null;
         }
-
-
+        
         private static void FillBlocksDictionary()
         {
             blocksInfo.Add(E_BLOCK.GRASS, new BlockInfo(E_BLOCK.GRASS, "grass", 2, 1, LoadMaterial("grass")));
@@ -119,7 +119,102 @@ namespace n_block
             return (Material)Resources.Load("Materials/" + _fileName, typeof(Material));
         }
     }
+
+
+
+
+
+
+
+
+
+
+    public class BlockPossibilityRange
+    {
+        public int from, to;
+        public BlockPossibilityRange(int _from, int _to)
+        {
+            from = _from;
+            to = _to;
+        }
+    }
+
+    public class BlockOccurrenceInfo
+    {
+        public int level;
+        public Dictionary<E_BLOCK, BlockPossibilityRange> blocksOccurrence;
+
+        public BlockOccurrenceInfo(int _lvl, Dictionary<E_BLOCK, BlockPossibilityRange> _blocksOccurrence)
+        {
+            level = _lvl;
+            blocksOccurrence = _blocksOccurrence;
+        }
+
+    }
+
+
+    public class BlockOccurrenceDatabase
+    {
+        private static bool dictionaryFilled = false;
+        private static List<BlockOccurrenceInfo> occurrencesInfos = new List<BlockOccurrenceInfo>();
+
+        private static int NUM_OF_LVLS = 2;
+
+        public static Dictionary<E_BLOCK, BlockPossibilityRange> GetOccurrencesInfo(int _lvl)
+        {
+            //if it's the first time we are getting block occurrence, fill blocksOccurrence dictionary
+            //if it is not skip filling dictionary
+            if (!dictionaryFilled)
+            {
+                FillBlockOccurrenceDictionary();
+                dictionaryFilled = true;
+            }
+
+            foreach(BlockOccurrenceInfo info in occurrencesInfos)
+            {
+                if (info.level == _lvl)
+                    return info.blocksOccurrence;
+            }
+           
+            Debug.LogError("CAN NOT GET BLOCK INFO DICTIONARY with LEVEL = " + _lvl + " FROM DICTIONARY");
+            return null;
+        }
+
+        public static E_BLOCK GenerateRandomBlock(int _lvl)
+        {
+            int rand = Random.Range(0, 100);
+            
+            foreach (KeyValuePair<E_BLOCK, BlockPossibilityRange> pair in GetOccurrencesInfo(_lvl))
+            {
+                if (rand >= pair.Value.from && rand <= pair.Value.to)
+                    return pair.Key;
+            }
+
+            Debug.LogError("CAN NOT GENERATE BLOCK FOR LEVEL = " + _lvl + " SO DEFAULT WILL BE E_BLOCK.GROUND");
+            return E_BLOCK.GROUND;
+        }
+
+        public static int GetLevelFromDepth(int _depth)
+        {
+            int maxDepth = n_chunk.CHUNK_SIZE.Y;
+            return (_depth / (maxDepth / NUM_OF_LVLS) );
+        }
+
+        private static void FillBlockOccurrenceDictionary()
+        {
+            occurrencesInfos.Add(new BlockOccurrenceInfo(0, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GRASS, new BlockPossibilityRange(0,50) }, { E_BLOCK.GROUND, new BlockPossibilityRange(50, 100) } }) );
+            occurrencesInfos.Add(new BlockOccurrenceInfo(1, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.RUBY, new BlockPossibilityRange(0, 40) }, { E_BLOCK.GROUND, new BlockPossibilityRange(40, 80) }, { E_BLOCK.SAND, new BlockPossibilityRange(80, 100) } }));
+        }
+    }
     
+
+
+
+
+
+
+
+
 
 
     public class BlockSprites

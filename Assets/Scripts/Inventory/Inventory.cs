@@ -32,6 +32,12 @@ public class Inventory : MonoBehaviour {
         
         PutItemInInventory(Tool.E_ITEM.PICKAXE, 1);        
         PutItemInInventory(Tool.E_ITEM.STICK, 1);
+        PutItemInInventory(Tool.E_ITEM.AXE, 1);
+        PutItemInInventory(Tool.E_ITEM.DYNAMITE, 1000);
+        PutItemInInventory(Tool.E_ITEM.HEALTH_UP, 2);
+        PutItemInInventory(Tool.E_ITEM.OXYGEN_TANK, 1);
+        PutItemInInventory(Tool.E_ITEM.TELEPORTER, 1);
+        PutItemInInventory(Tool.E_ITEM.SHOVEL, 1);
 
         FillItemSpritesToGUI();
     }
@@ -43,11 +49,7 @@ public class Inventory : MonoBehaviour {
         HandleItemChange();
         FillItemInfoToGUI();
 
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            if(ref_itemInHand != null)
-                ref_itemInHand.GetComponent<Item>().OnActionClick();
-        }
+        HandleOnMouseClick();
     }
 
 
@@ -134,6 +136,10 @@ public class Inventory : MonoBehaviour {
                 border.color = new Color(0, 1, 0, 1);
             else
                 border.color = new Color(1, 1, 1, 1);
+            //apply text for amount to slot
+            bool doesTextExists = (slot.FindChild("Amount"));
+            if (doesTextExists)
+                slot.FindChild("Amount").GetComponent<Text>().text = items[(Item.E_ITEM)count].ToString();            
 
             count++;
         }
@@ -212,8 +218,25 @@ public class Inventory : MonoBehaviour {
     }
 
 
+    void HandleOnMouseClick()
+    {
+        if (ref_itemInHand != null)
+        {
+            Item itemRef = ref_itemInHand.GetComponent<Item>();
+            //hold mouse down for tools
+            if (Input.GetKey(KeyCode.Mouse0) && itemRef.usageType == Item.E_ITEM_USAGE.NON_STACKABLE)
+                    ref_itemInHand.GetComponent<Item>().OnActionClick();
+            //press mouse down for other items
+            if (Input.GetKeyDown(KeyCode.Mouse0) && itemRef.usageType == Item.E_ITEM_USAGE.STACKABLE)
+                    ref_itemInHand.GetComponent<Item>().OnActionClick();
+        }
+            
+        
+
+    }
 
 
+    //*****ITEM OBJECT******
 
     void PlaceItemInHand(Tool.E_ITEM _id)
     {
@@ -227,14 +250,32 @@ public class Inventory : MonoBehaviour {
         
     }
 
-    void DestroyItemInHand()
+    public void DestroyItemInHand()
     {
         Destroy(ref_itemInHand);
     }
 
+
+
+    //*****ITEM LOGIC******
+
     public void PutItemInInventory(Tool.E_ITEM _id, int _value)
     {
         items[_id] = _value;
+    }
+
+    public void RemoveAmountOfItems(Tool.E_ITEM _id, int _value)
+    {
+        items[_id] = (items[_id] - 1 < 0) ? 0 : items[_id] - 1;
+    }
+
+    public bool IsItemInInventory(Tool.E_ITEM _id)
+    {
+        foreach (KeyValuePair<Item.E_ITEM, int> item in items)
+            if (item.Key == _id && item.Value > 0)
+                return true;
+        return false;
+                 
     }
 
 

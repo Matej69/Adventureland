@@ -18,7 +18,7 @@ public class ShopOwner : MonoBehaviour {
         player = FindObjectOfType<PlayerStats>().gameObject;
         mouseManager = FindObjectOfType<MouseManager>().GetComponent<MouseManager>();
 
-        CreateText();
+        CreateText();        
 
     }
 	
@@ -28,7 +28,7 @@ public class ShopOwner : MonoBehaviour {
 
         HandleShopGUIExistance();
         Handle3DTextVisibility();
-
+        
     }
 
 

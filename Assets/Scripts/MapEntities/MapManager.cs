@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MapManager : MonoBehaviour {
 
     public GameObject blockPrefab;
+    [HideInInspector]
+    public List<GameObject> blockObjects = new List<GameObject>();
 
     [HideInInspector]
     public n_chunk.Chunk chunk;
@@ -21,6 +24,7 @@ public class MapManager : MonoBehaviour {
     
 	// Update is called once per frame
 	void Update () {
+        
 	
 	}
 
@@ -30,11 +34,11 @@ public class MapManager : MonoBehaviour {
     public GameObject InitialMapInstantiation(Vector3Int _posInt, n_block.E_BLOCK _type)
     {
         GameObject newBlockObj = null;
-        if (_posInt.y == n_chunk.CHUNK_SIZE.Y - 1)
+        if (_posInt.y == 0)
         {
+            Vector3Int _correctPos = _posInt;
             newBlockObj = CreateBlock(_posInt, _type);
             n_block.BlockLogic block = chunk.GetBlock(_posInt);
-            block.isVisible = true;
         }
         return newBlockObj;
     }
@@ -43,13 +47,15 @@ public class MapManager : MonoBehaviour {
     {
         //change memory from null to new Block(...)
         n_block.BlockLogic midBlock = chunk.GetBlock(_posInt);
-        midBlock = new n_block.BlockLogic(_posInt, (byte)_type);
+        midBlock.SetProperties((byte)_type, _posInt, true);
 
         //create block object in scene
-        GameObject newBlock = (GameObject)Instantiate(blockPrefab, new Vector3(_posInt.x, _posInt.y, _posInt.z), Quaternion.identity);
+        //_posInt.y is NEGATIVE because we are crating blocks from top to bottom
+        GameObject newBlock = (GameObject)Instantiate(blockPrefab, new Vector3(_posInt.x, -_posInt.y, _posInt.z), Quaternion.identity);
         newBlock.GetComponent<BlockObject>().posID = _posInt;
         newBlock.GetComponent<BlockObject>().blockID = (byte)_type;
         newBlock.transform.parent = transform;
+        blockObjects.Add(newBlock);
 
         return newBlock;
 
@@ -62,8 +68,10 @@ public class MapManager : MonoBehaviour {
         Vector3Int posID = _blockObj.GetComponent<BlockObject>().posID;
         _chunk.ClearBlockFromMemory(posID);
         //Destroy from game scene
+        blockObjects.Remove(_blockObj);
         Destroy(_blockObj);
     }
+    
 
     public void CreateSurroundingBlocks(n_chunk.Chunk _chunk, Vector3Int _pos)
     {
@@ -85,12 +93,24 @@ public class MapManager : MonoBehaviour {
                 n_block.BlockLogic currBlock = chunk.GetBlock(curPos);
                 if (!currBlock.isVisible)
                 {
-                    currBlock.isVisible = true;
                     CreateBlock(curPos, (n_block.E_BLOCK)currBlock.id);
                 }        
             }           
         }   
 
+    }
+
+        
+    public List<BlockObject> GetBlocksObjectsInRange(GameObject _centerBlock, float _rad)
+    {
+        List<BlockObject> _blocks = new List<BlockObject>();
+        foreach(GameObject block in blockObjects)
+        {
+            if (Vector3.Distance(block.transform.position, _centerBlock.transform.position) < _rad)
+                _blocks.Add(block.GetComponent<BlockObject>());
+        }
+
+        return _blocks;            
     }
 
 

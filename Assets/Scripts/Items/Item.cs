@@ -21,8 +21,13 @@ public class Item : MonoBehaviour {
     public MapManager mapManager;
     [HideInInspector]
     public PlayerToWorldInteraction playerInteraction;
+    [HideInInspector]
+    public PlayerStats playerStats;
+    [HideInInspector]
+    public Inventory inventory;
 
-    
+    public E_ITEM_USAGE usageType;
+
     public enum E_ITEM
     {   
         STICK,     
@@ -36,13 +41,23 @@ public class Item : MonoBehaviour {
         SIZE                
     }
 
+    public enum E_ITEM_USAGE
+    {
+        NON_STACKABLE,
+        STACKABLE
+    }
+
     public virtual void OnActionClick() {
         //durability--;
     }
     protected virtual void OnStart()
     {
         mapManager = FindObjectOfType<MapManager>();
-        playerInteraction = FindObjectOfType<PlayerToWorldInteraction>();   
+        playerInteraction = FindObjectOfType<PlayerToWorldInteraction>();
+        playerStats = FindObjectOfType<PlayerStats>();
+        inventory = FindObjectOfType<Inventory>();
+
+        transform.localRotation = Quaternion.identity;
     }
 
 
