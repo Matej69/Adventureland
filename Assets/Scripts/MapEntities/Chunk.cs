@@ -7,8 +7,8 @@ namespace n_chunk
 
     //** VALUES MUST BE SMALLER THEN 255 BECAUSE WE'R USING BYTE, NOT INT
     public static class CHUNK_SIZE {
-        public const int X = 60;
-        public const int Z = 60;
+        public const int X = 50;
+        public const int Z = 50;
         public const int Y = 150;
     }
 

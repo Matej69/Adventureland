@@ -5,7 +5,7 @@ public class Explosion : MonoBehaviour {
 
 	void Start()
 	{
-        StartCoroutine(DestroyAfter(4f));
+        StartCoroutine(DestroyAfter(2.7f));
 	}
 
 
@@ -13,7 +13,6 @@ public class Explosion : MonoBehaviour {
     {
         yield return new WaitForSeconds(_sec);
         Destroy(gameObject);
-
     }
 
 

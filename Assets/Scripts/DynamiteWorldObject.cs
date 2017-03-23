@@ -12,7 +12,7 @@ public class DynamiteWorldObject : MonoBehaviour {
 
     public GameObject prefab_Explosion;
 
-    public LayerMask m_block;
+    public LayerMask m_block;    
 
     float velY = 3;
     bool canMove = true;
@@ -22,12 +22,6 @@ public class DynamiteWorldObject : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        /*
-        List<Vector3Int> positionIDs = new List<Vector3Int>() { new Vector3Int(1,1,1), new Vector3Int(1, 1, 1), new Vector3Int(1, 1, 1), new Vector3Int(1, 1, 1), new Vector3Int(1, 1, 2) };
-        Debug.Log(positionIDs.Count);
-        positionIDs = positionIDs.Distinct().ToList();
-        Debug.Log(positionIDs.Count);
-        */
         mapManager = FindObjectOfType<MapManager>();
 
         StartCoroutine(Explode(10f, null));       
@@ -85,7 +79,8 @@ public class DynamiteWorldObject : MonoBehaviour {
             canMove = false;
             touchingBlock = true;
             Vector3Int expPos = col.gameObject.GetComponent<BlockObject>().posID;
-            StartCoroutine(Explode(2f, col.gameObject));            
+            StartCoroutine(Explode(2f, col.gameObject));
+            
         }
     }
 
@@ -101,9 +96,14 @@ public class DynamiteWorldObject : MonoBehaviour {
             Vector3Int expPos = _centerBlock.GetComponent<BlockObject>().posID;
             DestroyBlocksInRange(_centerBlock);                  
         }
+                
         Destroy(gameObject);
     }
 
+
+    /*
+    THIS NEEDS TO BE FASTER AND MUCH MORE LESS EXPENSIVE ON CPU
+    */
 
     void DestroyBlocksInRange(GameObject _centerBlock)
     {
@@ -116,10 +116,9 @@ public class DynamiteWorldObject : MonoBehaviour {
         for (int x = centerPosID.x - halfRadius; x < centerPosID.x + halfRadius; ++x)
             for (int y = centerPosID.y - halfRadius; y < centerPosID.y + halfRadius; ++y)
                 for (int z = centerPosID.z - halfRadius; z < centerPosID.z + halfRadius; ++z)
-                {
-                    x = (x < 0) ? 0 : ((x > n_chunk.CHUNK_SIZE.X - 1) ? n_chunk.CHUNK_SIZE.X - 1 : x);
-                    y = (y < 0) ? 0 : ((y > n_chunk.CHUNK_SIZE.Y - 1) ? n_chunk.CHUNK_SIZE.Y - 1 : y);
-                    z = (z < 0) ? 0 : ((z > n_chunk.CHUNK_SIZE.Z - 1) ? n_chunk.CHUNK_SIZE.Z - 1 : z);
+                {                    
+                    if (x < 0 || x > n_chunk.CHUNK_SIZE.X - 1 || y < 0 || y > n_chunk.CHUNK_SIZE.Y - 1 || z < 0 || z > n_chunk.CHUNK_SIZE.Z - 1)
+                        continue;
                     positionIDs.Add(new Vector3Int(x, y, z));  
                 }
         
@@ -129,25 +128,15 @@ public class DynamiteWorldObject : MonoBehaviour {
         for (int x = centerPosID.x - halfRadius - boundOffset; x < centerPosID.x + halfRadius + boundOffset; ++x)
             for (int y = centerPosID.y - halfRadius - boundOffset; y < centerPosID.y + halfRadius + boundOffset; ++y)
                 for (int z = centerPosID.z - halfRadius - boundOffset; z < centerPosID.z + halfRadius + boundOffset; ++z)
-                {
-                    x = (x < 0) ? 0 : ((x > n_chunk.CHUNK_SIZE.X - 1) ? n_chunk.CHUNK_SIZE.X - 1 : x);
-                    y = (y < 0) ? 0 : ((y > n_chunk.CHUNK_SIZE.Y - 1) ? n_chunk.CHUNK_SIZE.Y - 1 : y);
-                    z = (z < 0) ? 0 : ((z > n_chunk.CHUNK_SIZE.Z - 1) ? n_chunk.CHUNK_SIZE.Z - 1 : z);
+                {                    
+                    if (x < 0 || x > n_chunk.CHUNK_SIZE.X - 1 || y < 0 || y > n_chunk.CHUNK_SIZE.Y - 1 || z < 0 || z > n_chunk.CHUNK_SIZE.Z - 1)
+                        continue;
                     withBoundIDs.Add(new Vector3Int(x, y, z));
                 }
-
-        //remove duplicate values (reason of duplication : bound limits)
-        positionIDs = positionIDs.Distinct().ToList();
-        withBoundIDs = withBoundIDs.Distinct().ToList();
-
-        /*
-        List<GameObject> blocksInRange = mapManager.GetBlocksObjectsInRange(_centerBlock, halfRadius);
-        Debug.Log(blocksInRange.Count);
-        blocksInRange = blocksInRange.Distinct().ToList();
-        Debug.Log(blocksInRange.Count);
-        */
-
-
+        
+        
+                 
+        
         //clear from memory every block that is inside explosion radius, but not bounds
         List<BlockObject> blockObjInRange = mapManager.GetBlocksObjectsInRange(_centerBlock, halfRadius);
         foreach (Vector3Int pos in positionIDs)
@@ -162,17 +151,20 @@ public class DynamiteWorldObject : MonoBehaviour {
             }            
         }
 
-        
-        //spawn all blocks that are in area of explosion + bound blocks        
-        foreach (Vector3Int posID in withBoundIDs)
-        {
-            if (mapManager.chunk.DoesBlockExists(posID))
-            {
-                if(!mapManager.chunk.blocks[posID.x, posID.z, posID.y].isVisible)
-                    mapManager.CreateBlock(posID, (n_block.E_BLOCK)mapManager.chunk.GetBlock(posID).id);
-            }
-        }
+         
 
+
+       //spawn all blocks that are in area of explosion + bound blocks        
+       foreach (Vector3Int posID in withBoundIDs)
+       {
+           if (mapManager.chunk.DoesBlockExists(posID))
+           {
+               if(!mapManager.chunk.blocks[posID.x, posID.z, posID.y].isVisible)
+                   mapManager.CreateBlock(posID, (n_block.E_BLOCK)mapManager.chunk.GetBlock(posID).id);
+           }
+       }
+
+       
 
     }
 

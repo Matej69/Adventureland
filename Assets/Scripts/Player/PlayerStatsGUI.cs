@@ -18,8 +18,8 @@ public class PlayerStatsGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        SetHealthBar(playerStats.GetHealth());
-        SetOxygenBar(playerStats.GetOxygen());
+        SetHealthBar((int)playerStats.GetHealth());
+        SetOxygenBar((int)playerStats.GetOxygen());
     }
 
 

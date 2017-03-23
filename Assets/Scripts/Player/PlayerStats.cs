@@ -3,17 +3,21 @@ using System.Collections;
 
 public class PlayerStats : MonoBehaviour {
     
-    private int maxHealth = 200;
-    private int maxOxygen = 200;
-    private int currentHealth;
-    private int currentOxygen;
+    private float maxHealth = 200;
+    private float maxOxygen = 200;
+    private float currentHealth;
+    private float currentOxygen;
 
     Timer reduceOxygenTimer;
+
+    PlayerToWorldInteraction playerWorldInteraction;
 
 
     // Use this for initialization
     void Start () {
+        playerWorldInteraction = gameObject.GetComponent<PlayerToWorldInteraction>();
         reduceOxygenTimer = new Timer(0.02f);
+
         SetHealth(maxHealth);
         SetOxygen(maxOxygen);
     }
@@ -25,33 +29,33 @@ public class PlayerStats : MonoBehaviour {
 
     
     
-    public void SetHealth(int _amount)
+    public void SetHealth(float _amount)
     {
         currentHealth = (_amount > maxHealth) ? maxHealth : _amount;
     }
     
-    public int GetHealth()
+    public float GetHealth()
     {
         return currentHealth;
     }
 
     
-    public void SetOxygen(int _amount)
+    public void SetOxygen(float _amount)
     {
         currentOxygen = (_amount > maxOxygen) ? maxOxygen : _amount;
     }
     
-    public int GetOxygen()
+    public float GetOxygen()
     {
         return currentOxygen;
     }
 
 
-    public void ReduceHealthBy(int _amount)
+    public void ReduceHealthBy(float _amount)
     {
         currentHealth -= _amount;
     }
-    public void ReduceOxygenBy(int _amount)
+    public void ReduceOxygenBy(float _amount)
     {
         currentOxygen -= _amount;
     }
@@ -77,18 +81,27 @@ public class PlayerStats : MonoBehaviour {
     }
 
 
+
     private void HandleOxygenReducement()
     {
         reduceOxygenTimer.Tick(Time.deltaTime);
         if(reduceOxygenTimer.IsFinished())
         {
-            ReduceOxygenBy(1);
+            ReduceOxygenBy(GetOxygenReducement());
             if (IsOxygenEmpty())
+            {                
                 ReduceHealthBy(1);
+            }
 
             reduceOxygenTimer.Reset();
         }
     }
+
+    private float GetOxygenReducement()
+    {
+        return (playerWorldInteraction.GetPlayerStandingLevel() / (float)n_chunk.CHUNK_SIZE.Y)/2;
+    }
+
 
 
 }

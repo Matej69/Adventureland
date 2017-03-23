@@ -17,7 +17,9 @@ public class MapManager : MonoBehaviour {
         
         chunk = new n_chunk.Chunk();
         chunk.DoForEachBlock(InitialMapInstantiation);
-        
+
+        BlockLifeManager.Instance();
+
 
     }
 
@@ -35,8 +37,7 @@ public class MapManager : MonoBehaviour {
     {
         GameObject newBlockObj = null;
         if (_posInt.y == 0)
-        {
-            Vector3Int _correctPos = _posInt;
+        {                 
             newBlockObj = CreateBlock(_posInt, _type);
             n_block.BlockLogic block = chunk.GetBlock(_posInt);
         }
@@ -44,21 +45,26 @@ public class MapManager : MonoBehaviour {
     }
 
     public GameObject CreateBlock(Vector3Int _posInt, n_block.E_BLOCK _type)
-    {
+    {        
+
         //change memory from null to new Block(...)
         n_block.BlockLogic midBlock = chunk.GetBlock(_posInt);
         midBlock.SetProperties((byte)_type, _posInt, true);
 
-        //create block object in scene
+        //create block object in scene  
+        GameObject newBlock = BlockLifeManager.Instance().TakeBlock();
+        if (newBlock == null)
+        {
+            newBlock = (GameObject)Instantiate(blockPrefab, new Vector3(_posInt.x, -_posInt.y, _posInt.z), Quaternion.identity);
+        }
         //_posInt.y is NEGATIVE because we are crating blocks from top to bottom
-        GameObject newBlock = (GameObject)Instantiate(blockPrefab, new Vector3(_posInt.x, -_posInt.y, _posInt.z), Quaternion.identity);
+        newBlock.transform.position = new Vector3(_posInt.x, -_posInt.y, _posInt.z);
         newBlock.GetComponent<BlockObject>().posID = _posInt;
         newBlock.GetComponent<BlockObject>().blockID = (byte)_type;
-        newBlock.transform.parent = transform;
+        newBlock.GetComponent<Renderer>().sharedMaterial = n_block.BlockInfoDatabase.GetBlockInfo(_type).material;
         blockObjects.Add(newBlock);
 
         return newBlock;
-
     }
 
 
@@ -67,9 +73,13 @@ public class MapManager : MonoBehaviour {
         //Destroy from memory
         Vector3Int posID = _blockObj.GetComponent<BlockObject>().posID;
         _chunk.ClearBlockFromMemory(posID);
+
         //Destroy from game scene
         blockObjects.Remove(_blockObj);
-        Destroy(_blockObj);
+
+        bool isPutForLater = BlockLifeManager.Instance().PutBlock(_blockObj);
+        if (!isPutForLater)
+            Destroy(_blockObj);
     }
     
 

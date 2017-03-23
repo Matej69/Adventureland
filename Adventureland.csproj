@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Items\Tool.cs" />
     <Compile Include="Assets\Scripts\LaserBeam.cs" />
     <Compile Include="Assets\Scripts\MapEntities\Block.cs" />
+    <Compile Include="Assets\Scripts\MapEntities\BlockLifeManager.cs" />
     <Compile Include="Assets\Scripts\MapEntities\BlockObject.cs" />
     <Compile Include="Assets\Scripts\MapEntities\Chunk.cs" />
     <Compile Include="Assets\Scripts\MapEntities\DestroiedBlock.cs" />

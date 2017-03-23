@@ -2,15 +2,16 @@
 using System.Collections;
 
 public class BlockObject : MonoBehaviour {
-    
-    //[HideInInspector]
+        
+    [HideInInspector]
     public Vector3Int posID;
+    [HideInInspector]
     public byte blockID;
-
+    
 	// Use this for initialization
 	void Start ()
     {
-        GetComponent<Renderer>().sharedMaterial = n_block.BlockInfoDatabase.GetBlockInfo((n_block.E_BLOCK)blockID).material;
+        //GetComponent<Renderer>().sharedMaterial = n_block.BlockInfoDatabase.GetBlockInfo((n_block.E_BLOCK)blockID).material;         
 	}
 
     public void OnDestroyByPlayer()
