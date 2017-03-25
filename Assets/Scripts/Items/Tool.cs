@@ -12,14 +12,13 @@ public class Tool : Item {
     public LayerMask blockMask;
     public Transform toolDamagePoint;
     
-
     // Use this for initialization
     void Start () {
         OnStart();
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {        
         //HandleTimerUpdate();
     }
 
@@ -30,7 +29,7 @@ public class Tool : Item {
 
         animator = GetComponent<Animator>();        
 
-        durability = 5;
+        //durability = 5;
         swingAnimTimer = new Timer(0.4f);
         swingAnimTimer.currentTime = 0;
     }
@@ -71,21 +70,12 @@ public class Tool : Item {
         RaycastHit hitInfo;
         if (Physics.Raycast(cam.transform.position, dir, out hitInfo, blockRayLength, blockMask))
         {
-            BlockObject blockScr = hitInfo.collider.gameObject.GetComponent<BlockObject>();
-            blockScr.OnDestroyByPlayer();
-            DestroyBlock(hitInfo.collider.gameObject);
+            BlockObject blockScr = hitInfo.collider.gameObject.GetComponent<BlockObject>();            
+            blockScr.OnToolHit(Item.GetInfo(itemType).power);
         }
-        //Debug.DrawRay(cam.transform.position, dir * blockRayLength, Color.red);
     }
-
-
-
-    void DestroyBlock(GameObject _block)
-    {
-        Vector3Int pos = _block.GetComponent<BlockObject>().posID;
-        mapManager.CreateSurroundingBlocks(mapManager.chunk, pos);
-        mapManager.DestroyBlock(_block, mapManager.chunk);
-    }
+    
+    
 
 
 

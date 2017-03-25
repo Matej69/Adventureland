@@ -57,11 +57,10 @@ public class MapManager : MonoBehaviour {
         {
             newBlock = (GameObject)Instantiate(blockPrefab, new Vector3(_posInt.x, -_posInt.y, _posInt.z), Quaternion.identity);
         }
+
         //_posInt.y is NEGATIVE because we are crating blocks from top to bottom
-        newBlock.transform.position = new Vector3(_posInt.x, -_posInt.y, _posInt.z);
-        newBlock.GetComponent<BlockObject>().posID = _posInt;
-        newBlock.GetComponent<BlockObject>().blockID = (byte)_type;
-        newBlock.GetComponent<Renderer>().sharedMaterial = n_block.BlockInfoDatabase.GetBlockInfo(_type).material;
+        n_block.BlockInfo blockInfo = n_block.BlockInfoDatabase.GetBlockInfo(_type);
+        newBlock.GetComponent<BlockObject>().SetProperties(_posInt, (byte)_type, (byte)blockInfo.durability, blockInfo.material);
         blockObjects.Add(newBlock);
 
         return newBlock;

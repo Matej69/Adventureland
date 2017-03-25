@@ -100,18 +100,18 @@ namespace n_block
         
         private static void FillBlocksDictionary()
         {
-            blocksInfo.Add(E_BLOCK.GRASS, new BlockInfo(E_BLOCK.GRASS, "grass", 2, 1, LoadMaterial("grass")));
-            blocksInfo.Add(E_BLOCK.GROUND, new BlockInfo(E_BLOCK.GROUND, "ground", 3, 2, LoadMaterial("ground")));
-            blocksInfo.Add(E_BLOCK.STONE, new BlockInfo(E_BLOCK.STONE, "stone", 3, 2, LoadMaterial("stone")));
-            blocksInfo.Add(E_BLOCK.SAND, new BlockInfo(E_BLOCK.SAND, "sand", 3, 2, LoadMaterial("sand")));
-            blocksInfo.Add(E_BLOCK.COAL, new BlockInfo(E_BLOCK.COAL, "coal", 3, 2, LoadMaterial("coal")));
-            blocksInfo.Add(E_BLOCK.METAL, new BlockInfo(E_BLOCK.METAL, "metal", 3, 2, LoadMaterial("metal")));
-            blocksInfo.Add(E_BLOCK.IRON, new BlockInfo(E_BLOCK.IRON, "iron", 3, 2, LoadMaterial("iron")));
-            blocksInfo.Add(E_BLOCK.GOLD, new BlockInfo(E_BLOCK.GOLD, "gold", 3, 2, LoadMaterial("gold")));
-            blocksInfo.Add(E_BLOCK.DIAMOND, new BlockInfo(E_BLOCK.DIAMOND, "diamond", 3, 2, LoadMaterial("diamond")));
-            blocksInfo.Add(E_BLOCK.RUBY, new BlockInfo(E_BLOCK.RUBY, "ruby", 3, 2, LoadMaterial("ruby")));
-            blocksInfo.Add(E_BLOCK.EMERALD, new BlockInfo(E_BLOCK.EMERALD, "emerald", 3, 2, LoadMaterial("emerald")));
-            blocksInfo.Add(E_BLOCK.LAPIS, new BlockInfo(E_BLOCK.LAPIS, "lapis", 3, 2, LoadMaterial("lapis")));
+            blocksInfo.Add(E_BLOCK.GRASS, new BlockInfo(E_BLOCK.GRASS, "grass", 1, 1, LoadMaterial("grass")));
+            blocksInfo.Add(E_BLOCK.GROUND, new BlockInfo(E_BLOCK.GROUND, "ground", 2, 2, LoadMaterial("ground")));
+            blocksInfo.Add(E_BLOCK.STONE, new BlockInfo(E_BLOCK.STONE, "stone", 4, 2, LoadMaterial("stone")));
+            blocksInfo.Add(E_BLOCK.SAND, new BlockInfo(E_BLOCK.SAND, "sand", 4, 2, LoadMaterial("sand")));
+            blocksInfo.Add(E_BLOCK.COAL, new BlockInfo(E_BLOCK.COAL, "coal", 8, 2, LoadMaterial("coal")));
+            blocksInfo.Add(E_BLOCK.METAL, new BlockInfo(E_BLOCK.METAL, "metal", 30, 2, LoadMaterial("metal")));
+            blocksInfo.Add(E_BLOCK.IRON, new BlockInfo(E_BLOCK.IRON, "iron", 15, 2, LoadMaterial("iron")));
+            blocksInfo.Add(E_BLOCK.GOLD, new BlockInfo(E_BLOCK.GOLD, "gold", 50, 2, LoadMaterial("gold")));
+            blocksInfo.Add(E_BLOCK.DIAMOND, new BlockInfo(E_BLOCK.DIAMOND, "diamond", 100, 2, LoadMaterial("diamond")));
+            blocksInfo.Add(E_BLOCK.RUBY, new BlockInfo(E_BLOCK.RUBY, "ruby", 150, 2, LoadMaterial("ruby")));
+            blocksInfo.Add(E_BLOCK.EMERALD, new BlockInfo(E_BLOCK.EMERALD, "emerald", 200, 2, LoadMaterial("emerald")));
+            blocksInfo.Add(E_BLOCK.LAPIS, new BlockInfo(E_BLOCK.LAPIS, "lapis", 250, 2, LoadMaterial("lapis")));
         }
 
         private static Material LoadMaterial(string _fileName)
@@ -202,7 +202,7 @@ namespace n_block
 
         private static void FillBlockOccurrenceDictionary()
         {
-            occurrencesInfos.Add(new BlockOccurrenceInfo(0, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GRASS, new BlockPossibilityRange(0,50) }, { E_BLOCK.GROUND, new BlockPossibilityRange(50, 100) } }) );
+            occurrencesInfos.Add(new BlockOccurrenceInfo(0, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.DIAMOND, new BlockPossibilityRange(0,50) }, { E_BLOCK.GROUND, new BlockPossibilityRange(50, 100) } }) );
             occurrencesInfos.Add(new BlockOccurrenceInfo(1, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.STONE, new BlockPossibilityRange(0, 10) }, { E_BLOCK.GROUND, new BlockPossibilityRange(10, 80) }, { E_BLOCK.METAL, new BlockPossibilityRange(80, 90) }, { E_BLOCK.IRON, new BlockPossibilityRange(90, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(2, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.STONE, new BlockPossibilityRange(0, 30) }, { E_BLOCK.SAND, new BlockPossibilityRange(30, 65) }, { E_BLOCK.COAL, new BlockPossibilityRange(65, 85) }, { E_BLOCK.METAL, new BlockPossibilityRange(85, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(3, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GOLD, new BlockPossibilityRange(0, 5) }, { E_BLOCK.SAND, new BlockPossibilityRange(5, 80) }, { E_BLOCK.COAL, new BlockPossibilityRange(80, 95) }, { E_BLOCK.LAPIS, new BlockPossibilityRange(95, 100) } }));
@@ -215,9 +215,7 @@ namespace n_block
     
 
 
-
-
-
+    
 
 
 
@@ -266,6 +264,21 @@ namespace n_block
         {
             return (Sprite)Resources.Load("Sprites/Blocks/" + _fileName, typeof(Sprite));
         }
+    }
+
+
+
+
+
+    public class BlockText
+    {
+        private static GameObject blockText;
+        
+        public static GameObject GetPrefab()
+        {
+            return ((blockText != null) ? blockText : blockText = (GameObject)Resources.Load("Objects/Blocks/Block3DText") );
+        }
+
     }
 
     

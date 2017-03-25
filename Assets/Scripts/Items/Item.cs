@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class ItemInfo
 {
     public string name;
+    public byte power;
     public GameObject prefab;
     public Sprite iconSprite;
     public Dictionary<n_block.E_BLOCK, int> requirements;
@@ -27,6 +28,8 @@ public class Item : MonoBehaviour {
     public Inventory inventory;
 
     public E_ITEM_USAGE usageType;
+    [HideInInspector]
+    public E_ITEM itemType;
 
     public enum E_ITEM
     {   
@@ -83,10 +86,11 @@ public class Item : MonoBehaviour {
     }
     
 
-    private static ItemInfo LoadInfo(string _name, Dictionary<n_block.E_BLOCK, int> _requirements)
+    private static ItemInfo LoadInfo(string _name, byte _power, Dictionary<n_block.E_BLOCK, int> _requirements)
     {
         ItemInfo info = new ItemInfo();
         info.name = _name;
+        info.power = _power;
         info.prefab = (GameObject)Resources.Load("Objects/Items/" + _name, typeof(GameObject));
         info.iconSprite = (Sprite)Resources.Load("Sprites/ItemIcons/" + _name, typeof(Sprite));
         info.requirements = _requirements;
@@ -96,14 +100,14 @@ public class Item : MonoBehaviour {
     {
         itemInfo = new Dictionary<E_ITEM, ItemInfo>();
 
-        itemInfo.Add(E_ITEM.STICK,          LoadInfo("Stick",       new Dictionary<n_block.E_BLOCK, int> { }));
-        itemInfo.Add(E_ITEM.SHOVEL,         LoadInfo("Shovel",      new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.IRON, 1 }, { n_block.E_BLOCK.STONE, 0 } } ));
-        itemInfo.Add(E_ITEM.AXE,            LoadInfo("Axe",         new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 20 - 19 }, { n_block.E_BLOCK.STONE, 40 - 39 }, { n_block.E_BLOCK.IRON, 40 - 39 } } ));
-        itemInfo.Add(E_ITEM.PICKAXE,        LoadInfo("Pickaxe",     new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 40 }, { n_block.E_BLOCK.IRON, 60 }, { n_block.E_BLOCK.GOLD, 40 } }));
-        itemInfo.Add(E_ITEM.DYNAMITE,       LoadInfo("Dynamite",    new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.COAL, 30 }, { n_block.E_BLOCK.LAPIS, 3 }, { n_block.E_BLOCK.SAND, 20 } }));
-        itemInfo.Add(E_ITEM.TELEPORTER,     LoadInfo("Teleporter",  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.LAPIS, 10 }, { n_block.E_BLOCK.DIAMOND, 10 }, { n_block.E_BLOCK.EMERALD, 2 } }));
-        itemInfo.Add(E_ITEM.OXYGEN_TANK,    LoadInfo("OxygenTank",  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 4 }, { n_block.E_BLOCK.EMERALD, 2 }, { n_block.E_BLOCK.IRON, 50 } }));
-        itemInfo.Add(E_ITEM.HEALTH_UP,      LoadInfo("HealthUp",    new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 25 }, { n_block.E_BLOCK.DIAMOND, 20 }, { n_block.E_BLOCK.EMERALD, 5 } }));
+        itemInfo.Add(E_ITEM.STICK,          LoadInfo("Stick", 1,    new Dictionary<n_block.E_BLOCK, int> { }));
+        itemInfo.Add(E_ITEM.SHOVEL,         LoadInfo("Shovel", 4,   new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.IRON, 1 }, { n_block.E_BLOCK.STONE, 0 } } ));
+        itemInfo.Add(E_ITEM.AXE,            LoadInfo("Axe", 15,     new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 20 - 19 }, { n_block.E_BLOCK.STONE, 40 - 39 }, { n_block.E_BLOCK.IRON, 40 - 39 } } ));
+        itemInfo.Add(E_ITEM.PICKAXE,        LoadInfo("Pickaxe",40,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 40 }, { n_block.E_BLOCK.IRON, 60 }, { n_block.E_BLOCK.GOLD, 40 } }));
+        itemInfo.Add(E_ITEM.DYNAMITE,       LoadInfo("Dynamite",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.COAL, 30 }, { n_block.E_BLOCK.LAPIS, 3 }, { n_block.E_BLOCK.SAND, 20 } }));
+        itemInfo.Add(E_ITEM.TELEPORTER,     LoadInfo("Teleporter",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.LAPIS, 10 }, { n_block.E_BLOCK.DIAMOND, 10 }, { n_block.E_BLOCK.EMERALD, 2 } }));
+        itemInfo.Add(E_ITEM.OXYGEN_TANK,    LoadInfo("OxygenTank",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 4 }, { n_block.E_BLOCK.EMERALD, 2 }, { n_block.E_BLOCK.IRON, 50 } }));
+        itemInfo.Add(E_ITEM.HEALTH_UP,      LoadInfo("HealthUp",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 25 }, { n_block.E_BLOCK.DIAMOND, 20 }, { n_block.E_BLOCK.EMERALD, 5 } }));
     }
     
 

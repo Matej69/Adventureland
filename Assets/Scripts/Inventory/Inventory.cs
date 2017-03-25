@@ -244,6 +244,7 @@ public class Inventory : MonoBehaviour {
         {
             Vector3 itemPos = Camera.main.transform.FindChild("HeldItemPos").gameObject.transform.position;
             ref_itemInHand = (GameObject)Instantiate(Item.GetInfo(_id).prefab, itemPos, Quaternion.identity);
+            ref_itemInHand.GetComponent<Item>().itemType = _id;
             ref_itemInHand.transform.parent = Camera.main.transform;
             itemInHandID = _id;
         }
