@@ -39,16 +39,18 @@ public class Tool : Item {
         if (ShopOwner.IsShopCreated())
             return;
 
-        //only swing if we are not already swinging        
-        if (!IsAttackAnimRunning())
-        {            
-            SetAttackAnimState(1);
-        }
-        else
+        //only swing if we are not already swinging       
+        if (animator)
         {
-            SetAttackAnimState(0);
+            if (!IsAttackAnimRunning())
+            {
+                SetAttackAnimState(1);
+            }
+            else
+            {
+                SetAttackAnimState(0);
+            }
         }
-        
     }
     
     public void SetAttackAnimState(int _stateInt)

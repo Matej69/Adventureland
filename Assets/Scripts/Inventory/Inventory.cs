@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour {
     public GameObject prefab_ItemInventory;
     GameObject ref_blockInventory;
     GameObject ref_itemInventory;
-    
+        
 
     // Use this for initialization
     void Start() {
@@ -29,15 +29,9 @@ public class Inventory : MonoBehaviour {
         SetInitValuesForItems();
 
         CreateItemInventory();
-        
-        PutItemInInventory(Tool.E_ITEM.PICKAXE, 1);        
+             
         PutItemInInventory(Tool.E_ITEM.STICK, 1);
-        PutItemInInventory(Tool.E_ITEM.AXE, 1);
-        PutItemInInventory(Tool.E_ITEM.DYNAMITE, 1000);
-        PutItemInInventory(Tool.E_ITEM.HEALTH_UP, 2);
-        PutItemInInventory(Tool.E_ITEM.OXYGEN_TANK, 1);
-        PutItemInInventory(Tool.E_ITEM.TELEPORTER, 1);
-        PutItemInInventory(Tool.E_ITEM.SHOVEL, 1);
+        PutItemInInventory(Tool.E_ITEM.DYNAMITE, 100);
 
         FillItemSpritesToGUI();
     }

@@ -158,7 +158,7 @@ namespace n_block
         private static bool dictionaryFilled = false;
         private static List<BlockOccurrenceInfo> occurrencesInfos = new List<BlockOccurrenceInfo>();
 
-        private static int NUM_OF_LVLS = 7;
+        private static int NUM_OF_LVLS = 8;
 
         public static Dictionary<E_BLOCK, BlockPossibilityRange> GetOccurrencesInfo(int _lvl)
         {
@@ -202,7 +202,7 @@ namespace n_block
 
         private static void FillBlockOccurrenceDictionary()
         {
-            occurrencesInfos.Add(new BlockOccurrenceInfo(0, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.DIAMOND, new BlockPossibilityRange(0,50) }, { E_BLOCK.GROUND, new BlockPossibilityRange(50, 100) } }) );
+            occurrencesInfos.Add(new BlockOccurrenceInfo(0, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GROUND, new BlockPossibilityRange(0, 90) }, { E_BLOCK.COAL, new BlockPossibilityRange(90, 100) } }) );
             occurrencesInfos.Add(new BlockOccurrenceInfo(1, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.STONE, new BlockPossibilityRange(0, 10) }, { E_BLOCK.GROUND, new BlockPossibilityRange(10, 80) }, { E_BLOCK.METAL, new BlockPossibilityRange(80, 90) }, { E_BLOCK.IRON, new BlockPossibilityRange(90, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(2, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.STONE, new BlockPossibilityRange(0, 30) }, { E_BLOCK.SAND, new BlockPossibilityRange(30, 65) }, { E_BLOCK.COAL, new BlockPossibilityRange(65, 85) }, { E_BLOCK.METAL, new BlockPossibilityRange(85, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(3, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GOLD, new BlockPossibilityRange(0, 5) }, { E_BLOCK.SAND, new BlockPossibilityRange(5, 80) }, { E_BLOCK.COAL, new BlockPossibilityRange(80, 95) }, { E_BLOCK.LAPIS, new BlockPossibilityRange(95, 100) } }));
@@ -210,6 +210,7 @@ namespace n_block
             occurrencesInfos.Add(new BlockOccurrenceInfo(5, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.GOLD, new BlockPossibilityRange(0, 15) }, { E_BLOCK.COAL, new BlockPossibilityRange(15, 90) }, { E_BLOCK.LAPIS, new BlockPossibilityRange(90, 95) }, { E_BLOCK.DIAMOND, new BlockPossibilityRange(95, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(6, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.RUBY, new BlockPossibilityRange(0, 5) }, { E_BLOCK.METAL, new BlockPossibilityRange(5, 80) }, { E_BLOCK.LAPIS, new BlockPossibilityRange(80, 85) }, { E_BLOCK.DIAMOND, new BlockPossibilityRange(85, 100) } }));
             occurrencesInfos.Add(new BlockOccurrenceInfo(7, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.RUBY, new BlockPossibilityRange(0, 20) }, { E_BLOCK.IRON, new BlockPossibilityRange(20, 65) }, { E_BLOCK.DIAMOND, new BlockPossibilityRange(65, 85) }, { E_BLOCK.EMERALD, new BlockPossibilityRange(85, 100) } }));
+            occurrencesInfos.Add(new BlockOccurrenceInfo(8, new Dictionary<E_BLOCK, BlockPossibilityRange> { { E_BLOCK.RUBY, new BlockPossibilityRange(0, 10) }, { E_BLOCK.GROUND, new BlockPossibilityRange(10, 70) }, { E_BLOCK.DIAMOND, new BlockPossibilityRange(70, 80) }, { E_BLOCK.EMERALD, new BlockPossibilityRange(80, 100) } }));
         }
     }
     

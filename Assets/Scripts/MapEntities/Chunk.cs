@@ -7,9 +7,9 @@ namespace n_chunk
 
     //** VALUES MUST BE SMALLER THEN 255 BECAUSE WE'R USING BYTE, NOT INT
     public static class CHUNK_SIZE {
-        public const int X = 50;
-        public const int Z = 50;
-        public const int Y = 150;
+        public const int X = 100;
+        public const int Z = 100;
+        public const int Y = 250;
     }
 
 
@@ -30,7 +30,7 @@ namespace n_chunk
                     for (int y = 0; y < n_chunk.CHUNK_SIZE.Y; ++y)
                     {
                         int level = n_block.BlockOccurrenceDatabase.GetLevelFromDepth(y);
-                        n_block.E_BLOCK blockType = n_block.BlockOccurrenceDatabase.GenerateRandomBlock(level);
+                        n_block.E_BLOCK blockType = (y == 0) ? n_block.E_BLOCK.GRASS : n_block.BlockOccurrenceDatabase.GenerateRandomBlock(level);
 
                         Vector3Int pos = new Vector3Int(x, y, z);
                         blocks[x, z, y] = new n_block.BlockLogic(pos, (byte)blockType);

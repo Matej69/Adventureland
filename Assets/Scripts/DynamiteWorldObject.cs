@@ -4,7 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 
 
-public class DynamiteWorldObject : MonoBehaviour {
+public class DynamiteWorldObject : MonoBehaviour
+{
 
     public float explosionRadius;
     public float movementSpeed;
@@ -12,7 +13,7 @@ public class DynamiteWorldObject : MonoBehaviour {
 
     public GameObject prefab_Explosion;
 
-    public LayerMask m_block;    
+    public LayerMask m_block;
 
     float velY = 3;
     bool canMove = true;
@@ -21,15 +22,15 @@ public class DynamiteWorldObject : MonoBehaviour {
     MapManager mapManager;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         mapManager = FindObjectOfType<MapManager>();
-
-        StartCoroutine(Explode(10f, null));       
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
-        //HandleRaycast();
+
+    // Update is called once per frame
+    void Update()
+    {
         HandleMovement();
     }
 
@@ -45,60 +46,34 @@ public class DynamiteWorldObject : MonoBehaviour {
             transform.Translate(transform.up * velY * Time.deltaTime, Space.World);
         }
     }
-
-    /*
-    void HandleRaycast()
-    {
-        if(canMove)
-        {
-            float length = 0.2f;
-            Vector3[] dirs = new Vector3[] { Vector3.up, Vector3.down, Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
-            RaycastHit hitInfo;
-
-            foreach (Vector3 dir in dirs)
-            {
-                bool didHit = Physics.Raycast(transform.position, dir, out hitInfo, length, m_block);
-                if(didHit)
-                {
-                    canMove = false;
-                    return;
-                }
-            }
-
-        }
+    
 
 
-    }
-    */
 
 
     void OnTriggerEnter(Collider col)
     {
-        if (!touchingBlock && col.gameObject.tag == "BlockSolid")
+        if ( col.CompareTag("BlockSolid") && !touchingBlock)
         {
             canMove = false;
             touchingBlock = true;
-            Vector3Int expPos = col.gameObject.GetComponent<BlockObject>().posID;
-            StartCoroutine(Explode(2f, col.gameObject));
-            
+            Explode(col.gameObject);
         }
     }
-
-
-
-
-    IEnumerator Explode(float _sec, GameObject _centerBlock)
+    
+    void Explode(GameObject _centerBlock)
     {
-        yield return new WaitForSeconds(_sec);        
         Instantiate(prefab_Explosion, transform.position, Quaternion.identity);
-        if (_centerBlock != null)
-        {
-            Vector3Int expPos = _centerBlock.GetComponent<BlockObject>().posID;
-            DestroyBlocksInRange(_centerBlock);                  
-        }
-                
+        DestroyBlocksInRange(_centerBlock.gameObject);
         Destroy(gameObject);
     }
+
+
+
+
+
+
+
 
 
     /*
@@ -112,75 +87,61 @@ public class DynamiteWorldObject : MonoBehaviour {
         Vector3Int centerPosID = _centerBlock.GetComponent<BlockObject>().posID;
 
         //get positions with bounds
-        List<Vector3Int> positionIDs = new List<Vector3Int>();        
+        List<Vector3Int> positionIDs = new List<Vector3Int>();
         for (int x = centerPosID.x - halfRadius; x < centerPosID.x + halfRadius; ++x)
             for (int y = centerPosID.y - halfRadius; y < centerPosID.y + halfRadius; ++y)
                 for (int z = centerPosID.z - halfRadius; z < centerPosID.z + halfRadius; ++z)
-                {                    
+                {
                     if (x < 0 || x > n_chunk.CHUNK_SIZE.X - 1 || y < 0 || y > n_chunk.CHUNK_SIZE.Y - 1 || z < 0 || z > n_chunk.CHUNK_SIZE.Z - 1)
                         continue;
-                    positionIDs.Add(new Vector3Int(x, y, z));  
+                    positionIDs.Add(new Vector3Int(x, y, z));
                 }
-        
+
         //get positions without bounds
         int boundOffset = 1;
         List<Vector3Int> withBoundIDs = new List<Vector3Int>();
         for (int x = centerPosID.x - halfRadius - boundOffset; x < centerPosID.x + halfRadius + boundOffset; ++x)
             for (int y = centerPosID.y - halfRadius - boundOffset; y < centerPosID.y + halfRadius + boundOffset; ++y)
                 for (int z = centerPosID.z - halfRadius - boundOffset; z < centerPosID.z + halfRadius + boundOffset; ++z)
-                {                    
+                {
                     if (x < 0 || x > n_chunk.CHUNK_SIZE.X - 1 || y < 0 || y > n_chunk.CHUNK_SIZE.Y - 1 || z < 0 || z > n_chunk.CHUNK_SIZE.Z - 1)
                         continue;
                     withBoundIDs.Add(new Vector3Int(x, y, z));
                 }
-        
-        
-                 
-        
+
+
+
+
         //clear from memory every block that is inside explosion radius, but not bounds
         List<BlockObject> blockObjInRange = mapManager.GetBlocksObjectsInRange(_centerBlock, halfRadius);
         foreach (Vector3Int pos in positionIDs)
         {
             mapManager.chunk.ClearBlockFromMemory(pos);
-            for(int i = blockObjInRange.Count - 1; i >= 0; --i)
+            for (int i = blockObjInRange.Count - 1; i >= 0; --i)
             {
                 if (pos == blockObjInRange[i].posID)
                 {
                     mapManager.DestroyBlock(blockObjInRange[i].gameObject, mapManager.chunk);
                 }
-            }            
+            }
         }
 
-         
 
 
-       //spawn all blocks that are in area of explosion + bound blocks        
-       foreach (Vector3Int posID in withBoundIDs)
-       {
-           if (mapManager.chunk.DoesBlockExists(posID))
-           {
-               if(!mapManager.chunk.blocks[posID.x, posID.z, posID.y].isVisible)
-                   mapManager.CreateBlock(posID, (n_block.E_BLOCK)mapManager.chunk.GetBlock(posID).id);
-           }
-       }
 
-       
+        //spawn all blocks that are in area of explosion + bound blocks        
+        foreach (Vector3Int posID in withBoundIDs)
+        {
+            if (mapManager.chunk.DoesBlockExists(posID))
+            {
+                if (!mapManager.chunk.blocks[posID.x, posID.z, posID.y].isVisible)
+                    mapManager.CreateBlock(posID, (n_block.E_BLOCK)mapManager.chunk.GetBlock(posID).id);
+            }
+        }
+
+
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

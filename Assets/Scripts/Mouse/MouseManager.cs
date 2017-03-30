@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class MouseManager : MonoBehaviour {
 
     public enum E_MOUSE
@@ -19,13 +20,13 @@ public class MouseManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Cursor.visible = false;
+        Cursor.visible = false;        
     }
 	
 	// Update is called once per frame
 	void Update () {
         SpriteFollowsMouse();
-
+        
     }
 
 

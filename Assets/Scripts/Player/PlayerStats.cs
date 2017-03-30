@@ -24,7 +24,8 @@ public class PlayerStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        HandleOxygenReducement();	
+        HandleOxygenReducement();
+        OnHealthZero();	
 	}
 
     
@@ -79,8 +80,7 @@ public class PlayerStats : MonoBehaviour {
     {
         return (currentOxygen <= 0);
     }
-
-
+    
 
     private void HandleOxygenReducement()
     {
@@ -100,6 +100,17 @@ public class PlayerStats : MonoBehaviour {
     private float GetOxygenReducement()
     {
         return (playerWorldInteraction.GetPlayerStandingLevel() / (float)n_chunk.CHUNK_SIZE.Y)/2;
+    }
+
+
+    private void OnHealthZero()
+    {
+        if (currentHealth <= 0)
+        {
+            transform.position = new Vector3(0, 30, 0);
+            ResetHealth();
+            ResetOxygen();
+        } 
     }
 
 
