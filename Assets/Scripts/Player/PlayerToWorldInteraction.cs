@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerToWorldInteraction : MonoBehaviour {    
+public class PlayerToWorldInteraction : MonoBehaviour {
 
+  
     // Use this for initialization
     void Start() {
     }
@@ -18,6 +19,15 @@ public class PlayerToWorldInteraction : MonoBehaviour {
         return ((int)transform.position.y > 0) ? 0 : Mathf.Abs((int)transform.position.y - 1);
     }
 
+
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.CompareTag("LavaArea"))
+        {
+            FindObjectOfType<LevelManager>().InitStateScene(LevelManager.E_GAME_STATE.BOSS_BATTLE);
+        }
+    }
 
     
 

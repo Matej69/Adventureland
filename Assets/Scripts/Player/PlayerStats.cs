@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour {
     private float currentHealth;
     private float currentOxygen;
 
-    Timer reduceOxygenTimer;
+    //Timer reduceOxygenTimer;
 
     PlayerToWorldInteraction playerWorldInteraction;
 
@@ -16,7 +16,7 @@ public class PlayerStats : MonoBehaviour {
     // Use this for initialization
     void Start () {
         playerWorldInteraction = gameObject.GetComponent<PlayerToWorldInteraction>();
-        reduceOxygenTimer = new Timer(0.02f);
+        //reduceOxygenTimer = new Timer(0.02f);
 
         SetHealth(maxHealth);
         SetOxygen(maxOxygen);
@@ -84,22 +84,22 @@ public class PlayerStats : MonoBehaviour {
 
     private void HandleOxygenReducement()
     {
-        reduceOxygenTimer.Tick(Time.deltaTime);
-        if(reduceOxygenTimer.IsFinished())
-        {
-            ReduceOxygenBy(GetOxygenReducement());
+        //reduceOxygenTimer.Tick(Time.deltaTime);
+        //if(reduceOxygenTimer.IsFinished())
+        //{
+            ReduceOxygenBy(GetOxygenReducement() * 10 * Time.deltaTime);
             if (IsOxygenEmpty())
             {                
-                ReduceHealthBy(1);
+                ReduceHealthBy(50 * Time.deltaTime);
             }
 
-            reduceOxygenTimer.Reset();
-        }
+            //reduceOxygenTimer.Reset();
+        //}
     }
 
     private float GetOxygenReducement()
     {
-        return (playerWorldInteraction.GetPlayerStandingLevel() / (float)n_chunk.CHUNK_SIZE.Y)/2;
+        return (playerWorldInteraction.GetPlayerStandingLevel() / (float)n_chunk.CHUNK_SIZE.Y);
     }
 
 
@@ -110,7 +110,9 @@ public class PlayerStats : MonoBehaviour {
             transform.position = new Vector3(0, 30, 0);
             ResetHealth();
             ResetOxygen();
-        } 
+            FindObjectOfType<LevelManager>().InitStateScene(LevelManager.E_GAME_STATE.DIGGING);
+        }
+        
     }
 
 

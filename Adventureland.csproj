@@ -72,6 +72,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\LevelManager.cs" />
     <Compile Include="Assets\Scripts\BlockPickupText.cs" />
     <Compile Include="Assets\Scripts\DynamiteWorldObject.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
