@@ -72,6 +72,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Boss.cs" />
+    <Compile Include="Assets\Fireball.cs" />
     <Compile Include="Assets\LevelManager.cs" />
     <Compile Include="Assets\Scripts\BlockPickupText.cs" />
     <Compile Include="Assets\Scripts\DynamiteWorldObject.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Assets\Scripts\Shop\ShopOwner.cs" />
     <Compile Include="Assets\Scripts\Textbox\Textbox.cs" />
     <Compile Include="Assets\Scripts\Textbox\TextboxMessageInfo.cs" />
+    <Compile Include="Assets\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

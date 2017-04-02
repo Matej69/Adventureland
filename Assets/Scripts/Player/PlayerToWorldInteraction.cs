@@ -19,13 +19,20 @@ public class PlayerToWorldInteraction : MonoBehaviour {
         return ((int)transform.position.y > 0) ? 0 : Mathf.Abs((int)transform.position.y - 1);
     }
 
+    public void ResetPosition()
+    {
+        Vector3 teleportToPos = GameObject.FindGameObjectWithTag("Teleporter").gameObject.transform.position;
+        teleportToPos.y += 0.3f;
+        transform.position = teleportToPos;          
+    }
+
 
 
     void OnTriggerEnter(Collider col)
     {
         if (col.CompareTag("LavaArea"))
         {
-            FindObjectOfType<LevelManager>().InitStateScene(LevelManager.E_GAME_STATE.BOSS_BATTLE);
+            FindObjectOfType<LevelManager>().SetSceneState(LevelManager.E_GAME_STATE.BOSS_BATTLE);
         }
     }
 

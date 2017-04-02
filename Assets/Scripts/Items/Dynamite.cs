@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Dynamite : Item {
     
     public GameObject prefab_dynamiteWorldObj;
-
+    
     // Use this for initialization
     void Start()
     {

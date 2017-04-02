@@ -32,6 +32,7 @@ public class Inventory : MonoBehaviour {
              
         PutItemInInventory(Tool.E_ITEM.STICK, 1);
         PutItemInInventory(Tool.E_ITEM.DYNAMITE, 100);
+        PutItemInInventory(Tool.E_ITEM.TELEPORTER, 4);
 
         FillItemSpritesToGUI();
     }

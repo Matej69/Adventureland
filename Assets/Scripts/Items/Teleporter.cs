@@ -2,15 +2,12 @@
 using System.Collections;
 
 public class Teleporter : Item {
-
-    Vector3 teleportToPos;
+    
 
     // Use this for initialization
     void Start()
     {
-        OnStart();
-        teleportToPos = GameObject.Find("TeleporterFreeObject").gameObject.transform.position;
-        teleportToPos.y += 0.3f;
+        OnStart();        
     }
 
     // Update is called once per frame
@@ -18,11 +15,13 @@ public class Teleporter : Item {
     {
 
     }
+    
+
 
 
     public override void OnActionClick()
     {
-        playerStats.gameObject.transform.position = teleportToPos;
+        playerStats.gameObject.GetComponent<PlayerToWorldInteraction>().ResetPosition();
         inventory.RemoveAmountOfItems(E_ITEM.TELEPORTER, 1);
         if (!inventory.IsItemInInventory(E_ITEM.TELEPORTER))
             inventory.DestroyItemInHand();

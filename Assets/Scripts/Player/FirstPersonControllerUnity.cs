@@ -68,15 +68,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         // Update is called once per frame
         public void Update()
-        {            
+        {     
             if (ShopOwner.IsShopCreated())
                 return;
 
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump && m_PreviouslyGrounded)
+            if (!m_Jump && m_PreviouslyGrounded && m_CharacterController.isGrounded)
             {
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                m_Jump = CrossPlatformInputManager.GetButton("Jump");
             }
 
             if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)

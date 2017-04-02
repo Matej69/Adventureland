@@ -4,6 +4,7 @@ using System.Collections;
 public class LevelManager : MonoBehaviour {
 
     public GameObject ref_Lava;
+    public GameObject ref_Boss;
 
     public enum E_GAME_STATE
     {
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour {
     
 	// Use this for initialization
 	void Start () {
+        SetSceneState(E_GAME_STATE.DIGGING);
 	
 	}
 	
@@ -30,8 +32,8 @@ public class LevelManager : MonoBehaviour {
 
 
 
-
-    public void InitStateScene(E_GAME_STATE _newState)
+    //calls HandleStateChange with oldState and newState actions and THEN changes state to newState
+    public void SetSceneState(E_GAME_STATE _newState)
     {
         HandleStateChange(_newState);
         state = _newState;
@@ -44,7 +46,11 @@ public class LevelManager : MonoBehaviour {
         {
             case E_GAME_STATE.START_SCREEN: { } break;
             case E_GAME_STATE.DIGGING: {  } break;
-            case E_GAME_STATE.BOSS_BATTLE: { ref_Lava.SetActive(false); Debug.Log("old called"); } break;
+            case E_GAME_STATE.BOSS_BATTLE:
+                {
+                    ref_Lava.SetActive(false);
+                    ref_Boss.GetComponent<Boss>().DestroyConnectedGO();
+                } break;
             case E_GAME_STATE.END_SCREEN: { } break;
         }
 
@@ -52,7 +58,10 @@ public class LevelManager : MonoBehaviour {
         {
             case E_GAME_STATE.START_SCREEN: { } break;
             case E_GAME_STATE.DIGGING: { } break;
-            case E_GAME_STATE.BOSS_BATTLE: { ref_Lava.SetActive(true); Debug.Log("new called"); } break;
+            case E_GAME_STATE.BOSS_BATTLE: {
+                    ref_Lava.SetActive(true);
+                    ref_Boss.GetComponent<Boss>().SetInFrontOfPlayer();
+                } break;
             case E_GAME_STATE.END_SCREEN: { } break;
         }                        
     }

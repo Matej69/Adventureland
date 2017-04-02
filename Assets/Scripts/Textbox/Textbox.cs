@@ -6,21 +6,25 @@ using UnityEngine.UI;
 
 public class Textbox : MonoBehaviour {
 
+    static public bool isTextboxActive = false;
+    static Textbox instance;
+
     private List<TextboxMessageInfo> messages = new List<TextboxMessageInfo>();
 
     Timer displayNewLetter;
 
     Text messageDisplayed;
-
+   
+    static public Textbox GetInstance()
+    {
+        return ((instance != null) ? instance : instance = FindObjectOfType<Textbox>());
+    }   
 
 	// Use this for initialization
 	void Start () {
         messageDisplayed = transform.FindChild("Message").GetComponent<Text>();
 
-        displayNewLetter = new Timer(0.02f);
-
-        messages.Add(new TextboxMessageInfo("Yolo man read this yolo swag"));
-        messages.Add(new TextboxMessageInfo("Second message I kill who do not obey"));
+        displayNewLetter = new Timer(0.042f);
     }
 	
 	// Update is called once per frame
@@ -41,7 +45,7 @@ public class Textbox : MonoBehaviour {
                 messages[0].ReadLetter();
                 messageDisplayed.text = messages[0].msg;
             }      
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Space))
             {
                 messages.RemoveAt(0);
                 if (!AnyMessagesLeft())
@@ -60,15 +64,17 @@ public class Textbox : MonoBehaviour {
 
 
 
-    void EnableMessageBox(List<TextboxMessageInfo> _msgs)
+    public void EnableMessageBox(List<TextboxMessageInfo> _msgs)
     {
         messages = _msgs;
         GetComponent<Canvas>().enabled = true;
+        Textbox.isTextboxActive = true;
     }    
 
     void DisableMessageBox()
     {
         GetComponent<Canvas>().enabled = false;
+        Textbox.isTextboxActive = false;
     }
 
 

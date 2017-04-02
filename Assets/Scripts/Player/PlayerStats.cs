@@ -107,10 +107,10 @@ public class PlayerStats : MonoBehaviour {
     {
         if (currentHealth <= 0)
         {
-            transform.position = new Vector3(0, 30, 0);
+            playerWorldInteraction.ResetPosition();
             ResetHealth();
             ResetOxygen();
-            FindObjectOfType<LevelManager>().InitStateScene(LevelManager.E_GAME_STATE.DIGGING);
+            FindObjectOfType<LevelManager>().SetSceneState(LevelManager.E_GAME_STATE.DIGGING);
         }
         
     }

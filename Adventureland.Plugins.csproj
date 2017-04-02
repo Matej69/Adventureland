@@ -79,6 +79,7 @@
     <Compile Include="Assets\Standard Assets\NotMineModels\Fx Explosion Pack\Script\csLightControl.cs" />
     <Compile Include="Assets\Standard Assets\NotMineModels\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
     <Compile Include="Assets\Standard Assets\NotMineModels\Teleportation Pad\CustomTeleporter.cs" />
+    <Compile Include="Assets\Standard Assets\PinwheelFantasyEffectFreePack2\Scripts\Spawn.cs" />
     <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\AICharacterControl.cs" />
     <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
     <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\ThirdPersonUserControl.cs" />
