@@ -35,7 +35,7 @@ public class Zombie : MonoBehaviour {
 
     void LookAtPlayer()
     {
-        transform.LookAt(player.transform);
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
     }
     void MoveForward()
     {

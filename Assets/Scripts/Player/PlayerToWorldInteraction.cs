@@ -34,6 +34,16 @@ public class PlayerToWorldInteraction : MonoBehaviour {
         {
             FindObjectOfType<LevelManager>().SetSceneState(LevelManager.E_GAME_STATE.BOSS_BATTLE);
         }
+        if (col.CompareTag("Fireball"))
+        {
+            GetComponent<PlayerStats>().ReduceHealthBy(30f);
+            Destroy(col.gameObject);
+        }
+        if (col.CompareTag("Zombie"))
+        {
+            GetComponent<PlayerStats>().ReduceHealthBy(15f);
+            Destroy(col.gameObject);
+        }
     }
 
     

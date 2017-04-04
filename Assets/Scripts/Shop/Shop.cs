@@ -29,10 +29,10 @@ public class Shop : MonoBehaviour {
 
 
 
-
+    //Init slot for every item, except STICK
     void InitItemSlots()
     {
-        for(int i = 0; i <= (int)Item.E_ITEM.SIZE - 1; ++i)
+        for(int i = 1; i <= (int)Item.E_ITEM.SIZE - 1; ++i)
         {
             GameObject newSlot = (GameObject)Instantiate(prefab_ItemSlot, ref_ItemList.transform);
             newSlot.transform.localScale = new Vector3(1, 1, 0);   
@@ -44,7 +44,7 @@ public class Shop : MonoBehaviour {
 
     void FillSlotsWithInfos()
     {
-        for (int i = 0; i <= (int)Item.E_ITEM.SIZE - 1; ++i)
+        for (int i = 0; i <= (int)Item.E_ITEM.SIZE - 2; ++i)
         {
             //***SET REQUIREMENTS
             //Get requirement text components from GUI
@@ -52,30 +52,28 @@ public class Shop : MonoBehaviour {
             Transform Requirements = Slots[i].transform.FindChild("Requirements").transform;
             foreach (Transform child in Requirements)
                 requiremenText.Add(child.gameObject.GetComponent<Text>());
-
+            
             //Get requirement button component from GUI
             Button slotButton = Slots[i].transform.FindChild("Buy").GetComponent<Button>();
             Text slotButtonText = slotButton.transform.FindChild("Text").GetComponent<Text>();
 
-
+            
             //***Apply info/visuals for TEXT to GUI for each block that item requires
-            ItemInfo itemInfo = Item.GetInfo((Item.E_ITEM)i);
+            ItemInfo itemInfo = Item.GetInfo((Item.E_ITEM)i + 1);
             int reqTextIDToSetup = 0;
             bool allRequirementsFulfill = true;
             foreach (KeyValuePair<n_block.E_BLOCK, int> pair in itemInfo.requirements)
             {
-                //if (itemInfo.DoesRequire(pair.Key))
-                //{
                     //if we don't have required amount of one block, requirements are not fulfill
-                    allRequirementsFulfill = (inventoryScr.GetBlockAmount(pair.Key) < pair.Value) ? false : allRequirementsFulfill; 
+                    allRequirementsFulfill = (inventoryScr.GetBlockAmount(pair.Key) < pair.Value) ? false : allRequirementsFulfill;
 
+                    Debug.Log(requiremenText.Count);
                     //Set text values
                     requiremenText[reqTextIDToSetup].text = n_block.BlockInfoDatabase.GetBlockInfo(pair.Key).name + " : " + inventoryScr.GetBlockAmount(pair.Key) + "/" + pair.Value;
                     requiremenText[reqTextIDToSetup].color = (inventoryScr.GetBlockAmount(pair.Key) >= pair.Value) ? new Color32(0, 255, 0, 255) : new Color32(255, 0, 0, 255);
-                    reqTextIDToSetup++;                    
-                //}
+                    reqTextIDToSetup++;                     
             }
-
+            
             //***Apply info/visuals for BUTTON to GUI for each item slot
             Color btnColor = slotButton.image.color;
             Color textColor = slotButtonText.color;
@@ -88,22 +86,22 @@ public class Shop : MonoBehaviour {
             {
                 slotButton.image.color = new Color(btnColor.r, btnColor.g, btnColor.b, 0.3f);
                 slotButtonText.color = new Color(textColor.r, textColor.g, textColor.b, 0.3f);
-            }
-
-
+            }                          
         }
+
 
     }
 
 
 
 
+
     void SetButtonListeners()
     {
-        for (int i = 0; i <= (int)Item.E_ITEM.SIZE - 1; ++i)
+        for (int i = 0; i <= (int)Item.E_ITEM.SIZE - 2; ++i)
         {            
             Button slotButton = Slots[i].transform.FindChild("Buy").GetComponent<Button>();
-            int fix_i = i;
+            int fix_i = i + 1;
             slotButton.onClick.AddListener(() => OnButtonClick(fix_i));
         }
     }

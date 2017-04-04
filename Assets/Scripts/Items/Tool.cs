@@ -13,7 +13,7 @@ public class Tool : Item {
     public Transform toolDamagePoint;
     
     // Use this for initialization
-    void Start () {
+    void Awake () {
         OnStart();
     }
 	
@@ -36,7 +36,7 @@ public class Tool : Item {
 
     public override void OnActionClick()
     {
-        if (ShopOwner.IsShopCreated())
+        if (ShopOwner.IsShopCreated() || Textbox.isTextboxActive)
             return;
 
         //only swing if we are not already swinging       

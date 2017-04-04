@@ -3,10 +3,15 @@ using System.Collections;
 
 public class OxygenTank : Item {
     
+    void Awake()
+    {
+        OnStart();
+    }
+
     // Use this for initialization
     void Start()
     {
-        OnStart();
+        //OnStart();
 
     }
 
@@ -19,6 +24,8 @@ public class OxygenTank : Item {
 
     public override void OnActionClick()
     {
+        if (Textbox.isTextboxActive)
+            return;
         playerStats.ResetOxygen();
         inventory.RemoveAmountOfItems(E_ITEM.OXYGEN_TANK, 1);
         if (!inventory.IsItemInInventory(E_ITEM.OXYGEN_TANK))

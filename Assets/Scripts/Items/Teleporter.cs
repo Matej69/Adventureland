@@ -5,7 +5,7 @@ public class Teleporter : Item {
     
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         OnStart();        
     }
@@ -21,6 +21,8 @@ public class Teleporter : Item {
 
     public override void OnActionClick()
     {
+        if (Textbox.isTextboxActive)
+            return;
         playerStats.gameObject.GetComponent<PlayerToWorldInteraction>().ResetPosition();
         inventory.RemoveAmountOfItems(E_ITEM.TELEPORTER, 1);
         if (!inventory.IsItemInInventory(E_ITEM.TELEPORTER))

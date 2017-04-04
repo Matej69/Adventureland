@@ -14,6 +14,7 @@ public class Textbox : MonoBehaviour {
     Timer displayNewLetter;
 
     Text messageDisplayed;
+    Text nextMessage;
    
     static public Textbox GetInstance()
     {
@@ -23,8 +24,9 @@ public class Textbox : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         messageDisplayed = transform.FindChild("Message").GetComponent<Text>();
+        nextMessage = transform.FindChild("PressEMessage").GetComponent<Text>();
 
-        displayNewLetter = new Timer(0.042f);
+        displayNewLetter = new Timer(0.025f);
     }
 	
 	// Update is called once per frame
@@ -37,38 +39,44 @@ public class Textbox : MonoBehaviour {
 
     void HandleMessageDisplay()
     {
-        displayNewLetter.Tick(Time.deltaTime);
+        displayNewLetter.Tick(Time.deltaTime);        
         if(displayNewLetter.IsFinished() && AnyMessagesLeft())
-        {
-            if(!messages[0].IsMessageRead())
+        {            
+            if (!messages[0].IsMessageRead())
             {
+                nextMessage.enabled = false;
                 messages[0].ReadLetter();
                 messageDisplayed.text = messages[0].msg;
-            }      
-            else if (Input.GetKey(KeyCode.Space))
+            } 
+            else
             {
-                messages.RemoveAt(0);
-                if (!AnyMessagesLeft())
-                    DisableMessageBox();
-            }
+                nextMessage.enabled = true;
+                if (Input.GetKey(KeyCode.E))
+                {
+                    messages.RemoveAt(0);
+                    if (!AnyMessagesLeft())
+                        DisableMessageBox();
+                }
+            }  
+
+            
 
             displayNewLetter.Reset();
-        }
+        }        
     }
 
     bool AnyMessagesLeft()
     {
         return (messages.Count != 0);
     }
-
-
+    
 
 
     public void EnableMessageBox(List<TextboxMessageInfo> _msgs)
     {
         messages = _msgs;
         GetComponent<Canvas>().enabled = true;
-        Textbox.isTextboxActive = true;
+        Textbox.isTextboxActive = true;        
     }    
 
     void DisableMessageBox()

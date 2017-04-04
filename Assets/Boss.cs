@@ -27,6 +27,13 @@ public class Boss : MonoBehaviour {
     Vector3 targetPos;
     float movementSpeed = 1.4f;
 
+    public GameObject ref_HealthBar;
+    private float health = 70;
+    private float maxHealth = 70;
+
+    [HideInInspector]
+    public bool defeated = false;
+
     void Awake()
     {
         player = FindObjectOfType<PlayerToWorldInteraction>();
@@ -45,16 +52,35 @@ public class Boss : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        transform.LookAt(player.transform);        
+        LookAtPlayer();       
 
         HandleSpriteChange();
 
-        if (!Textbox.isTextboxActive)
+        DisplayHealth();
+                
+        //boss behaviour update when attacking player
+        if (!Textbox.isTextboxActive && !defeated)
         {
             ShotHandler();
             SpawnZombieHandler();
             Move();
         }
+        //end game text box started
+        if (health <= 0 && !defeated)
+        {
+            FindObjectOfType<Inventory>().PutItemInInventory(Item.E_ITEM.TELEPORTER, 1);
+            defeated = true;
+            player.GetComponent<PlayerStats>().invulnerable = true;
+            OnBossDefeated();
+            DestroyConnectedGO();
+        }
+        //after end game text box
+        if (defeated && !Textbox.isTextboxActive)
+        {
+            transform.Translate(Vector3.down * 2.4f * Time.deltaTime);
+        }
+        
+        
 
     }
 
@@ -63,15 +89,27 @@ public class Boss : MonoBehaviour {
 
     void OnFirstTimeSpawn()
     {
-        //enable textbox
         Textbox.GetInstance().EnableMessageBox(new List<TextboxMessageInfo>() {
             new TextboxMessageInfo("Boss : You finally arrived ............... MORTAL!"),
             new TextboxMessageInfo("Me : OMG Notch.... is.... is that you??!??"),
             new TextboxMessageInfo("Boss : My name is not Notch idiot.... it is HEISENBERG!!!!")
         });
-        //player look at notch
-        player.transform.LookAt(transform);
     }
+
+    void OnBossDefeated()
+    {
+        Textbox.GetInstance().EnableMessageBox(new List<TextboxMessageInfo>() {
+            new TextboxMessageInfo("Boss : I... I can't believe this!"),
+            new TextboxMessageInfo("Boss : You've defeated me."),
+            new TextboxMessageInfo("Boss : I guess I'm not the one who knocks anymore..."),
+            new TextboxMessageInfo("Boss : I'm done with this life in the Earths core."),
+            new TextboxMessageInfo("Me : So is that it? What now?"),
+            new TextboxMessageInfo("Boss : I have never though about that..."),
+            new TextboxMessageInfo("Boss : I guess I will just buy a house in Beverly Hills or something...")
+        });
+    }
+
+
 
 
     void ChangeSprite(E_SPRITE _spriteID)
@@ -111,6 +149,11 @@ public class Boss : MonoBehaviour {
 
 
 
+    void LookAtPlayer()
+    {
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+    }
+
     void Move()
     {
         if(IsTargetPosReached())
@@ -141,7 +184,7 @@ public class Boss : MonoBehaviour {
         if (shotTimer.IsFinished())
         {
             ShotFireball();
-            shotTimer.SetStartTime(Random.Range(12, 37) / 10);
+            shotTimer.SetStartTime(Random.Range(12, 27) / 10);
             shotTimer.Reset();            
         }
     }
@@ -172,6 +215,23 @@ public class Boss : MonoBehaviour {
         pos.z += Random.Range(0, 700) / 100;
         GameObject zombie = (GameObject)Instantiate(prefab_enemy, pos, Quaternion.identity);
         connectedGameObjects.Add(zombie);
+    }
+
+
+
+    public void ResetHealth()
+    {
+        health = maxHealth;
+    }
+    public void ReduceHealthBy(float _amount)
+    {
+        health -= _amount;
+    }
+    public void DisplayHealth()
+    {
+        Vector3 scale = ref_HealthBar.transform.localScale;
+        scale.x = (health > 0) ? health / 10f : 0f;
+        ref_HealthBar.transform.localScale = scale;
     }
 
 

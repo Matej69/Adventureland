@@ -57,14 +57,26 @@ public class DynamiteWorldObject : MonoBehaviour
         {
             canMove = false;
             touchingBlock = true;
-            Explode(col.gameObject);
+            DestroyBlocksInRange(col.gameObject);
+            Explode();
+        }
+        if (col.CompareTag("Zombie"))
+        {
+            Instantiate(prefab_Explosion, transform.position, Quaternion.identity);
+            Destroy(col.gameObject);
+            Destroy(gameObject);
+        }
+        if (col.CompareTag("Boss"))
+        {
+            Instantiate(prefab_Explosion, transform.position, Quaternion.identity);
+            col.gameObject.GetComponent<Boss>().ReduceHealthBy(5f);
+            Destroy(gameObject);
         }
     }
     
-    void Explode(GameObject _centerBlock)
+    void Explode()
     {
-        Instantiate(prefab_Explosion, transform.position, Quaternion.identity);
-        DestroyBlocksInRange(_centerBlock.gameObject);
+        Instantiate(prefab_Explosion, transform.position, Quaternion.identity);        
         Destroy(gameObject);
     }
 

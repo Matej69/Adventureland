@@ -12,6 +12,8 @@ public class PlayerStats : MonoBehaviour {
 
     PlayerToWorldInteraction playerWorldInteraction;
 
+    [HideInInspector]
+    public bool invulnerable = false;
 
     // Use this for initialization
     void Start () {
@@ -24,6 +26,7 @@ public class PlayerStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        HandleOxygenRegeneration();
         HandleOxygenReducement();
         OnHealthZero();	
 	}
@@ -60,6 +63,10 @@ public class PlayerStats : MonoBehaviour {
     {
         currentOxygen -= _amount;
     }
+    public void AddOxygen(float _amount)
+    {
+        currentOxygen += _amount;
+    }
 
 
     public void ResetHealth()
@@ -80,21 +87,33 @@ public class PlayerStats : MonoBehaviour {
     {
         return (currentOxygen <= 0);
     }
-    
+
+
+
+
+
+    private void HandleOxygenRegeneration()
+    {
+        if (playerWorldInteraction.GetPlayerStandingLevel() == 0)
+        {
+            float amount = 50f * Time.deltaTime;
+            amount = (currentOxygen + amount > maxOxygen) ? 0 : amount;
+            AddOxygen(amount);
+        }
+    }
+
+
 
     private void HandleOxygenReducement()
-    {
-        //reduceOxygenTimer.Tick(Time.deltaTime);
-        //if(reduceOxygenTimer.IsFinished())
-        //{
+    {        
+        if (!Textbox.isTextboxActive && !invulnerable)
+        {
             ReduceOxygenBy(GetOxygenReducement() * 10 * Time.deltaTime);
             if (IsOxygenEmpty())
-            {                
+            {
                 ReduceHealthBy(50 * Time.deltaTime);
             }
-
-            //reduceOxygenTimer.Reset();
-        //}
+        }
     }
 
     private float GetOxygenReducement()
@@ -107,6 +126,10 @@ public class PlayerStats : MonoBehaviour {
     {
         if (currentHealth <= 0)
         {
+            if (FindObjectOfType<Boss>())
+                FindObjectOfType<Boss>().ResetHealth();
+
+            FindObjectOfType<Inventory>().EmptyBlockInventory();
             playerWorldInteraction.ResetPosition();
             ResetHealth();
             ResetOxygen();

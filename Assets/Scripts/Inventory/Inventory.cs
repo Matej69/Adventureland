@@ -33,6 +33,7 @@ public class Inventory : MonoBehaviour {
         PutItemInInventory(Tool.E_ITEM.STICK, 1);
         PutItemInInventory(Tool.E_ITEM.DYNAMITE, 100);
         PutItemInInventory(Tool.E_ITEM.TELEPORTER, 4);
+        PutItemInInventory(Tool.E_ITEM.OXYGEN_TANK, 40);
 
         FillItemSpritesToGUI();
     }
@@ -63,12 +64,18 @@ public class Inventory : MonoBehaviour {
     }
 
 
-    //******ADD AMOUNT OF UNITS******
+    //******ADD/REMOVE AMOUNT OF UNITS******
     public void AddBlock(n_block.E_BLOCK _id)
     {
         for (int i = 0; i < (int)n_block.E_BLOCK.SIZE; ++i)
             if ((n_block.E_BLOCK)i == _id)
                 blocks[(n_block.E_BLOCK)i] += 1;
+    }
+
+    public void EmptyBlockInventory()
+    {
+        for (int i = 0; i < (int)(n_block.E_BLOCK.SIZE - 1); ++i)
+            blocks[(n_block.E_BLOCK)i] = 0;
     }
 
 

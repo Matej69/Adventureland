@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ShopOwner : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class ShopOwner : MonoBehaviour {
     GameObject ref_3DText;
 
     MouseManager mouseManager;
+
+    bool didShopOwnerSpoken = false;
 
     // Use this for initialization
     void Start () {        
@@ -26,7 +29,7 @@ public class ShopOwner : MonoBehaviour {
 	void Update () {
         LookTowardsPlayer();
 
-        HandleShopGUIExistance();
+        HandlePlayerInteraction();
         Handle3DTextVisibility();
         
     }
@@ -69,16 +72,35 @@ public class ShopOwner : MonoBehaviour {
     }
 
 
-    void HandleShopGUIExistance()
+    void HandlePlayerInteraction()
     {     
         if (Vector3.Distance(transform.position, player.transform.position) < 7)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !Textbox.isTextboxActive)
             {
-                if (!IsShopCreated())
-                    CreateShop();
+                if (!didShopOwnerSpoken)
+                {
+                    Textbox.GetInstance().EnableMessageBox(new List<TextboxMessageInfo> {
+                        new TextboxMessageInfo("Me : Hey Frogman Freeman, what up son?"),
+                        new TextboxMessageInfo("Shop owner : What is hidden in the Earths core............."),
+                        new TextboxMessageInfo("Shop owner : is much more then mortal can handle."),
+                        new TextboxMessageInfo("Shop owner : You must be prepared for what awaits you on your adventure"),
+                        new TextboxMessageInfo("Shop owner : Press 'I' to see what minerals you have acquired"),
+                        new TextboxMessageInfo("Shop owner : ................."),
+                        new TextboxMessageInfo("Shop owner : ................................."),
+                        new TextboxMessageInfo("Shop owner : ................. BTW I'm #7 most popular meme in world so show me some respect...."),
+                        new TextboxMessageInfo("Me : ................. ok, Green Boy Slim............ :-O "),
+                        new TextboxMessageInfo("Shop owner : ;( ")
+                    });
+                    didShopOwnerSpoken = true;
+                }
                 else
-                    DestroyShop();
+                {
+                    if (!IsShopCreated())
+                        CreateShop();
+                    else
+                        DestroyShop();
+                }
             }
         }
         else

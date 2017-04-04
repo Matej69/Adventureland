@@ -7,7 +7,7 @@ public class Dynamite : Item {
     public GameObject prefab_dynamiteWorldObj;
     
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         OnStart();
     }
@@ -21,6 +21,8 @@ public class Dynamite : Item {
 
     public override void OnActionClick()
     {
+        if (Textbox.isTextboxActive)
+            return;
         CreateFreeDynamiteObj();
         inventory.RemoveAmountOfItems(E_ITEM.DYNAMITE, 1);
         if (!inventory.IsItemInInventory(E_ITEM.DYNAMITE))
