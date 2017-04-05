@@ -66,7 +66,8 @@ public class BlockObject : MonoBehaviour {
        
 
     public void OnToolHit(byte _damageAmount)
-    {        
+    {
+        SoundManager.GetInstance().PlaySound((n_block.E_BLOCK)blockID);
         ReduceDurability(_damageAmount);
         if (durability <= 0)
             OnDestroyByPlayer();

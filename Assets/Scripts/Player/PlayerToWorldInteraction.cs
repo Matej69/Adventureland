@@ -3,9 +3,11 @@ using System.Collections;
 
 public class PlayerToWorldInteraction : MonoBehaviour {
 
+    PlayerStats playerStats;
   
     // Use this for initialization
     void Start() {
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -34,14 +36,10 @@ public class PlayerToWorldInteraction : MonoBehaviour {
         {
             FindObjectOfType<LevelManager>().SetSceneState(LevelManager.E_GAME_STATE.BOSS_BATTLE);
         }
-        if (col.CompareTag("Fireball"))
+        if (col.CompareTag("Fireball") || col.CompareTag("Zombie"))
         {
-            GetComponent<PlayerStats>().ReduceHealthBy(30f);
-            Destroy(col.gameObject);
-        }
-        if (col.CompareTag("Zombie"))
-        {
-            GetComponent<PlayerStats>().ReduceHealthBy(15f);
+            playerStats.ReduceHealthBy( col.CompareTag("Fireball")?30f:15f );            
+            SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.HURT);
             Destroy(col.gameObject);
         }
     }

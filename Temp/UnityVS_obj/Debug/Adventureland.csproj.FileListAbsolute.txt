@@ -1,0 +1,15 @@
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\Assembly-CSharp.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\Assembly-UnityScript-firstpass.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEditor.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.Networking.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.xml
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\UnityEditor.xml
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_obj\Debug\Adventureland.csprojResolveAssemblyReference.cache
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_obj\Debug\Assembly-CSharp.dll
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_obj\Debug\Assembly-CSharp.pdb
+E:\ProgramingProjects\Adventureland\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb

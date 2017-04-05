@@ -8,10 +8,9 @@ public class LevelManager : MonoBehaviour {
 
     public enum E_GAME_STATE
     {
-        START_SCREEN,
         DIGGING,
         BOSS_BATTLE,
-        END_SCREEN      
+        BOSS_DEFEATED
     }
 
     public E_GAME_STATE state = E_GAME_STATE.DIGGING;
@@ -24,8 +23,7 @@ public class LevelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
+        
 	
 	}
 
@@ -44,25 +42,23 @@ public class LevelManager : MonoBehaviour {
         E_GAME_STATE oldState = state;
         switch(oldState)
         {
-            case E_GAME_STATE.START_SCREEN: { } break;
             case E_GAME_STATE.DIGGING: {  } break;
             case E_GAME_STATE.BOSS_BATTLE:
                 {
                     ref_Lava.SetActive(false);
                     ref_Boss.GetComponent<Boss>().DestroyConnectedGO();
                 } break;
-            case E_GAME_STATE.END_SCREEN: { } break;
+            case E_GAME_STATE.BOSS_DEFEATED: { } break;
         }
 
         switch(_newState)
         {
-            case E_GAME_STATE.START_SCREEN: { } break;
             case E_GAME_STATE.DIGGING: { } break;
             case E_GAME_STATE.BOSS_BATTLE: {
                     ref_Lava.SetActive(true);
                     ref_Boss.GetComponent<Boss>().SetInFrontOfPlayer();
                 } break;
-            case E_GAME_STATE.END_SCREEN: { } break;
+            case E_GAME_STATE.BOSS_DEFEATED: { } break;
         }                        
     }
 

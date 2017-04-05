@@ -68,6 +68,7 @@ public class Boss : MonoBehaviour {
         //end game text box started
         if (health <= 0 && !defeated)
         {
+            FindObjectOfType<LevelManager>().state = LevelManager.E_GAME_STATE.BOSS_DEFEATED;
             FindObjectOfType<Inventory>().PutItemInInventory(Item.E_ITEM.TELEPORTER, 1);
             defeated = true;
             player.GetComponent<PlayerStats>().invulnerable = true;

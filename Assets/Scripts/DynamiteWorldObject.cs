@@ -63,6 +63,7 @@ public class DynamiteWorldObject : MonoBehaviour
         if (col.CompareTag("Zombie"))
         {
             Instantiate(prefab_Explosion, transform.position, Quaternion.identity);
+            SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.ZOMBIE_DEATH);
             Destroy(col.gameObject);
             Destroy(gameObject);
         }

@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Shop\ShopOwner.cs" />
     <Compile Include="Assets\Scripts\Textbox\Textbox.cs" />
     <Compile Include="Assets\Scripts\Textbox\TextboxMessageInfo.cs" />
+    <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>

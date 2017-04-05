@@ -7,12 +7,15 @@ public class Zombie : MonoBehaviour {
 
     float speed = 7.5f;
 
+    Timer timer_idleSound;
+
 	// Use this for initialization
 	void Start () {
         player = FindObjectOfType<PlayerToWorldInteraction>().gameObject;
+        timer_idleSound = new Timer(1.6f);
 
         InitMesh();
-        StartCoroutine(DestroyAfter(20f));
+        StartCoroutine(DestroyAfter(40f));
 
     }
 	
@@ -20,6 +23,8 @@ public class Zombie : MonoBehaviour {
 	void Update () {
         LookAtPlayer();
         MoveForward();
+
+        timer_idleSound.Tick(Time.deltaTime);
 
 
     }
@@ -42,6 +47,17 @@ public class Zombie : MonoBehaviour {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
+
+
+    void HandleIdleSound()
+    {
+        timer_idleSound.Tick(Time.deltaTime);
+        if(timer_idleSound.IsFinished())
+        {
+            SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.ZOMBIE_IDLE);
+            timer_idleSound.Reset();
+        }
+    }
 
 
 

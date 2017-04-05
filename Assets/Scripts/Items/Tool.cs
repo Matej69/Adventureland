@@ -39,16 +39,18 @@ public class Tool : Item {
         if (ShopOwner.IsShopCreated() || Textbox.isTextboxActive)
             return;
 
-        //only swing if we are not already swinging       
+
+        //only swing if we are not already swinging      
+        
         if (animator)
         {
             if (!IsAttackAnimRunning())
             {
-                SetAttackAnimState(1);
+                SetAttackAnimState(1);                
             }
             else
             {
-                SetAttackAnimState(0);
+                SetAttackAnimState(0);                
             }
         }
     }
@@ -76,9 +78,14 @@ public class Tool : Item {
             blockScr.OnToolHit(Item.GetInfo(itemType).power);
         }
     }
-    
+
     
 
+
+    void PlaySwingSound()
+    {
+        SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.SWING);
+    }
 
 
 

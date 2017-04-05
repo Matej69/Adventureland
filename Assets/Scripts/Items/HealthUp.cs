@@ -19,6 +19,7 @@ public class HealthUp : Item {
     {
         if (Textbox.isTextboxActive)
             return;
+        SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.HEALTH_UP);
         playerStats.ResetHealth();
         inventory.RemoveAmountOfItems(E_ITEM.HEALTH_UP, 1);
         if(!inventory.IsItemInInventory(E_ITEM.HEALTH_UP))

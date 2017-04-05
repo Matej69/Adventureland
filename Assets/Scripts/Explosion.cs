@@ -5,6 +5,7 @@ public class Explosion : MonoBehaviour {
 
 	void Start()
 	{
+        SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.EXPLOSION);
         StartCoroutine(DestroyAfter(2.7f));
 	}
 
