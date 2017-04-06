@@ -105,13 +105,13 @@ namespace n_block
             blocksInfo.Add(E_BLOCK.STONE, new BlockInfo(E_BLOCK.STONE, "stone", 4, 2, LoadMaterial("stone")));
             blocksInfo.Add(E_BLOCK.SAND, new BlockInfo(E_BLOCK.SAND, "sand", 4, 2, LoadMaterial("sand")));
             blocksInfo.Add(E_BLOCK.COAL, new BlockInfo(E_BLOCK.COAL, "coal", 8, 2, LoadMaterial("coal")));
-            blocksInfo.Add(E_BLOCK.METAL, new BlockInfo(E_BLOCK.METAL, "metal", 30, 2, LoadMaterial("metal")));
-            blocksInfo.Add(E_BLOCK.IRON, new BlockInfo(E_BLOCK.IRON, "iron", 15, 2, LoadMaterial("iron")));
-            blocksInfo.Add(E_BLOCK.GOLD, new BlockInfo(E_BLOCK.GOLD, "gold", 50, 2, LoadMaterial("gold")));
-            blocksInfo.Add(E_BLOCK.DIAMOND, new BlockInfo(E_BLOCK.DIAMOND, "diamond", 100, 2, LoadMaterial("diamond")));
-            blocksInfo.Add(E_BLOCK.RUBY, new BlockInfo(E_BLOCK.RUBY, "ruby", 150, 2, LoadMaterial("ruby")));
-            blocksInfo.Add(E_BLOCK.EMERALD, new BlockInfo(E_BLOCK.EMERALD, "emerald", 200, 2, LoadMaterial("emerald")));
-            blocksInfo.Add(E_BLOCK.LAPIS, new BlockInfo(E_BLOCK.LAPIS, "lapis", 250, 2, LoadMaterial("lapis")));
+            blocksInfo.Add(E_BLOCK.METAL, new BlockInfo(E_BLOCK.METAL, "metal", 23, 2, LoadMaterial("metal")));
+            blocksInfo.Add(E_BLOCK.IRON, new BlockInfo(E_BLOCK.IRON, "iron", 13, 2, LoadMaterial("iron")));
+            blocksInfo.Add(E_BLOCK.GOLD, new BlockInfo(E_BLOCK.GOLD, "gold", 45, 2, LoadMaterial("gold")));
+            blocksInfo.Add(E_BLOCK.DIAMOND, new BlockInfo(E_BLOCK.DIAMOND, "diamond", 70, 2, LoadMaterial("diamond")));
+            blocksInfo.Add(E_BLOCK.RUBY, new BlockInfo(E_BLOCK.RUBY, "ruby", 115, 2, LoadMaterial("ruby")));
+            blocksInfo.Add(E_BLOCK.EMERALD, new BlockInfo(E_BLOCK.EMERALD, "emerald", 160, 2, LoadMaterial("emerald")));
+            blocksInfo.Add(E_BLOCK.LAPIS, new BlockInfo(E_BLOCK.LAPIS, "lapis", 210, 2, LoadMaterial("lapis")));
         }
 
         private static Material LoadMaterial(string _fileName)

@@ -66,8 +66,7 @@ public class Shop : MonoBehaviour {
             {
                     //if we don't have required amount of one block, requirements are not fulfill
                     allRequirementsFulfill = (inventoryScr.GetBlockAmount(pair.Key) < pair.Value) ? false : allRequirementsFulfill;
-
-                    Debug.Log(requiremenText.Count);
+                
                     //Set text values
                     requiremenText[reqTextIDToSetup].text = n_block.BlockInfoDatabase.GetBlockInfo(pair.Key).name + " : " + inventoryScr.GetBlockAmount(pair.Key) + "/" + pair.Value;
                     requiremenText[reqTextIDToSetup].color = (inventoryScr.GetBlockAmount(pair.Key) >= pair.Value) ? new Color32(0, 255, 0, 255) : new Color32(255, 0, 0, 255);

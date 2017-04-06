@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class Dynamite : Item {
     
-    public GameObject prefab_dynamiteWorldObj;
-    
+    public GameObject prefab_dynamiteWorldObj;    
+
     // Use this for initialization
     void Awake()
     {
-        OnStart();
+        OnStart();        
     }
 
     // Update is called once per frame

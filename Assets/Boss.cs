@@ -16,6 +16,7 @@ public class Boss : MonoBehaviour {
 
     public Sprite sprite_hisenberg;
     public Sprite sprite_notch;
+    public Texture tex_hisenberg;
 
     List<GameObject> connectedGameObjects = new List<GameObject>();    
     
@@ -68,6 +69,7 @@ public class Boss : MonoBehaviour {
         //end game text box started
         if (health <= 0 && !defeated)
         {
+            GameObject.FindGameObjectWithTag("Sun").GetComponent<Renderer>().material.SetTexture("_EmissionMap", tex_hisenberg);
             FindObjectOfType<LevelManager>().state = LevelManager.E_GAME_STATE.BOSS_DEFEATED;
             FindObjectOfType<Inventory>().PutItemInInventory(Item.E_ITEM.TELEPORTER, 1);
             defeated = true;
@@ -106,7 +108,9 @@ public class Boss : MonoBehaviour {
             new TextboxMessageInfo("Boss : I'm done with this life in the Earths core."),
             new TextboxMessageInfo("Me : So is that it? What now?"),
             new TextboxMessageInfo("Boss : I have never though about that..."),
-            new TextboxMessageInfo("Boss : I guess I will just buy a house in Beverly Hills or something...")
+            new TextboxMessageInfo("Boss : I guess I will just buy a house in Beverly Hills or something... or became Sun lol ... :)"),
+            new TextboxMessageInfo("Boss : Now let me slowly melt down in lava because... game design"),
+            new TextboxMessageInfo("Me : ........... -.-")
         });
     }
 

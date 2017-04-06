@@ -263,6 +263,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             Rigidbody body = hit.collider.attachedRigidbody;
+            //on ceeling hit
+            if (m_CollisionFlags == CollisionFlags.Above)
+            {
+                m_MoveDir.y = -Math.Abs(m_MoveDir.y);
+            }
             //dont move the rigidbody if the character is on top of it
             if (m_CollisionFlags == CollisionFlags.Below)
             {
