@@ -12,7 +12,7 @@ public class BlockLifeManager : MonoBehaviour {
 
     public GameObject[] blockObjectList = new GameObject[1000];
     public int lastObjID = -1;
-    public Vector3 blockBagPos = new Vector3(10, 10, 0);
+    public Vector3 blockBagPos = new Vector3(700, 700, 0);
     private GameObject prefab_blockObj;
     
 

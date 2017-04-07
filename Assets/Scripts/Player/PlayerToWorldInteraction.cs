@@ -38,7 +38,7 @@ public class PlayerToWorldInteraction : MonoBehaviour {
         }
         if (col.CompareTag("Fireball") || col.CompareTag("Zombie"))
         {
-            playerStats.ReduceHealthBy( col.CompareTag("Fireball")?30f:15f );            
+            playerStats.ReduceHealthBy( col.CompareTag("Fireball")?40f:25f );            
             SoundManager.GetInstance().PlaySound(SoundManager.E_NON_BLOCK_SOUND.HURT);
             Destroy(col.gameObject);
         }

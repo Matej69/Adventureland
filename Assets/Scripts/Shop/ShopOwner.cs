@@ -81,9 +81,9 @@ public class ShopOwner : MonoBehaviour {
                 if (!didShopOwnerSpoken)
                 {
                     Textbox.GetInstance().EnableMessageBox(new List<TextboxMessageInfo> {
-                        new TextboxMessageInfo("Me : Hey Frogman Freeman, what up son?"),
+                        new TextboxMessageInfo("Me : Hey Frogman Freeman, what's up son?"),
                         new TextboxMessageInfo("Shop owner : What is hidden in the Earths core............."),
-                        new TextboxMessageInfo("Shop owner : is much more then mortal can handle."),
+                        new TextboxMessageInfo("Shop owner : Is much more then single mortal can handle."),
                         new TextboxMessageInfo("Shop owner : You must be prepared for what awaits you on your adventure"),
                         new TextboxMessageInfo("Shop owner : Press 'I' to see what minerals you have acquired"),
                         new TextboxMessageInfo("Shop owner : ................."),

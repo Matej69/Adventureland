@@ -31,9 +31,6 @@ public class Inventory : MonoBehaviour {
         CreateItemInventory();
              
         PutItemInInventory(Tool.E_ITEM.STICK, 1);
-        PutItemInInventory(Tool.E_ITEM.DYNAMITE, 100);
-        PutItemInInventory(Tool.E_ITEM.TELEPORTER, 4);
-        PutItemInInventory(Tool.E_ITEM.OXYGEN_TANK, 40);
 
         FillItemSpritesToGUI();
     }
@@ -264,7 +261,7 @@ public class Inventory : MonoBehaviour {
 
     public void PutItemInInventory(Tool.E_ITEM _id, int _value)
     {
-        items[_id] = _value;
+        items[_id] += _value;
     }
 
     public void RemoveAmountOfItems(Tool.E_ITEM _id, int _value)

@@ -93,7 +93,7 @@ public class Boss : MonoBehaviour {
     void OnFirstTimeSpawn()
     {
         Textbox.GetInstance().EnableMessageBox(new List<TextboxMessageInfo>() {
-            new TextboxMessageInfo("Boss : You finally arrived ............... MORTAL!"),
+            new TextboxMessageInfo("Boss : You have finally arrived ............... MORTAL!"),
             new TextboxMessageInfo("Me : OMG Notch.... is.... is that you??!??"),
             new TextboxMessageInfo("Boss : My name is not Notch idiot.... it is HEISENBERG!!!!")
         });
@@ -107,8 +107,8 @@ public class Boss : MonoBehaviour {
             new TextboxMessageInfo("Boss : I guess I'm not the one who knocks anymore..."),
             new TextboxMessageInfo("Boss : I'm done with this life in the Earths core."),
             new TextboxMessageInfo("Me : So is that it? What now?"),
-            new TextboxMessageInfo("Boss : I have never though about that..."),
-            new TextboxMessageInfo("Boss : I guess I will just buy a house in Beverly Hills or something... or became Sun lol ... :)"),
+            new TextboxMessageInfo("Boss : I have never thought about that..."),
+            new TextboxMessageInfo("Boss : I guess I will just buy a house in Beverly Hills or something... or became the Sun lol ... :)"),
             new TextboxMessageInfo("Boss : Now let me slowly melt down in lava because... game design"),
             new TextboxMessageInfo("Me : ........... -.-")
         });

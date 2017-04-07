@@ -100,12 +100,12 @@ public class Item : MonoBehaviour {
 
         itemInfo.Add(E_ITEM.STICK,          LoadInfo("Stick", 1,    new Dictionary<n_block.E_BLOCK, int> { }));
         itemInfo.Add(E_ITEM.SHOVEL,         LoadInfo("Shovel", 4,   new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.GROUND, 30 }, { n_block.E_BLOCK.STONE, 15 }, { n_block.E_BLOCK.IRON, 5 } } ));
-        itemInfo.Add(E_ITEM.AXE,            LoadInfo("Axe", 15,     new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 20 }, { n_block.E_BLOCK.STONE, 40 }, { n_block.E_BLOCK.IRON, 40 } } ));
-        itemInfo.Add(E_ITEM.PICKAXE,        LoadInfo("Pickaxe",40,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 40 }, { n_block.E_BLOCK.IRON, 50 }, { n_block.E_BLOCK.GOLD, 30 } }));
-        itemInfo.Add(E_ITEM.DYNAMITE,       LoadInfo("Dynamite",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.COAL, 20 }, { n_block.E_BLOCK.LAPIS, 3 }, { n_block.E_BLOCK.SAND, 20 } }));
-        itemInfo.Add(E_ITEM.TELEPORTER,     LoadInfo("Teleporter",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.LAPIS, 10 }, { n_block.E_BLOCK.DIAMOND, 10 }, { n_block.E_BLOCK.EMERALD, 2 } }));
-        itemInfo.Add(E_ITEM.OXYGEN_TANK,    LoadInfo("OxygenTank",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 4 }, { n_block.E_BLOCK.EMERALD, 2 }, { n_block.E_BLOCK.IRON, 50 } }));
-        itemInfo.Add(E_ITEM.HEALTH_UP,      LoadInfo("HealthUp",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 25 }, { n_block.E_BLOCK.DIAMOND, 20 }, { n_block.E_BLOCK.EMERALD, 5 } }));
+        itemInfo.Add(E_ITEM.AXE,            LoadInfo("Axe", 16,     new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 13 }, { n_block.E_BLOCK.STONE, 27 }, { n_block.E_BLOCK.IRON, 15 } } ));
+        itemInfo.Add(E_ITEM.PICKAXE,        LoadInfo("Pickaxe",50,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 40 }, { n_block.E_BLOCK.IRON, 45 }, { n_block.E_BLOCK.GOLD, 23 } }));
+        itemInfo.Add(E_ITEM.DYNAMITE,       LoadInfo("Dynamite",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.COAL, 15 }, { n_block.E_BLOCK.LAPIS, 7 }, { n_block.E_BLOCK.SAND, 15 } }));
+        itemInfo.Add(E_ITEM.TELEPORTER,     LoadInfo("Teleporter",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.LAPIS, 5 }, { n_block.E_BLOCK.DIAMOND, 5 }, { n_block.E_BLOCK.EMERALD, 5 } }));
+        itemInfo.Add(E_ITEM.OXYGEN_TANK,    LoadInfo("OxygenTank",0,new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.METAL, 8  }, { n_block.E_BLOCK.SAND, 5 }, { n_block.E_BLOCK.IRON, 7 } }));
+        itemInfo.Add(E_ITEM.HEALTH_UP,      LoadInfo("HealthUp",0,  new Dictionary<n_block.E_BLOCK, int> { { n_block.E_BLOCK.RUBY, 8 }, { n_block.E_BLOCK.DIAMOND, 8 }, { n_block.E_BLOCK.EMERALD, 5 } }));
     }
     
 

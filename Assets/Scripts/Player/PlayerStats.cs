@@ -108,6 +108,7 @@ public class PlayerStats : MonoBehaviour {
     {        
         if (!Textbox.isTextboxActive && !invulnerable)
         {
+
             ReduceOxygenBy(GetOxygenReducement() * 10 * Time.deltaTime);
             if (IsOxygenEmpty())
             {
@@ -118,7 +119,10 @@ public class PlayerStats : MonoBehaviour {
 
     private float GetOxygenReducement()
     {
-        return (playerWorldInteraction.GetPlayerStandingLevel() / (float)n_chunk.CHUNK_SIZE.Y);
+        int standingLvl = playerWorldInteraction.GetPlayerStandingLevel();
+        float normalRedAmount = standingLvl / (float)n_chunk.CHUNK_SIZE.Y;
+        float maxRedAmount = 160f / (float)n_chunk.CHUNK_SIZE.Y;
+        return (standingLvl < 160f) ? normalRedAmount : maxRedAmount;
     }
 
 

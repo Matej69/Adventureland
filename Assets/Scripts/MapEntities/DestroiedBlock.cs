@@ -25,7 +25,7 @@ public class DestroiedBlock : MonoBehaviour {
         }
 
         //speed of opacity reducing is exponential function
-        disappearingSpeed += 0.005f;
+        disappearingSpeed += 0.0075f;
 
     }
 
